@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,20 +18,25 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "topics")
-public class Topic {
+@Table(name = "users")
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "topic_id")
+	@Column(name = "user_id")
 	private Long id;
 	
-	@OneToMany(mappedBy = "topic")
+	private String username;
+	
+	private String email;
+	
+	private String password;
+	
+	private String role;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
 	
-	@Column(nullable = false)
-	private String name;
-
 	@Column(name = "created_at", updatable = false)
 	private LocalDateTime createdAt;
 
