@@ -29,6 +29,10 @@ public class Comment {
 	@JoinColumn(name = "post_id")
 	private Post post;
 	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
 	private String text;
 	
 	@Column(name = "created_at", updatable = false)
