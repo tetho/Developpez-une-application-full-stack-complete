@@ -38,7 +38,7 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public List<CommentDTO> getCommentsByPost(Long postId) {
+    public List<CommentDTO> getCommentsByPostId(Long postId) {
         List<Comment> comments = commentRepository.findByPostId(postId);
         return comments.stream().map(commentMapper::toDTO).collect(Collectors.toList());
     }
@@ -52,6 +52,15 @@ public class CommentService implements ICommentService {
         comment.setUser(user);
         Comment savedComment = commentRepository.save(comment);
         return commentMapper.toDTO(savedComment);
+    }
+    
+    @Override
+    public CommentDTO updateComment(Long id, CommentDTO commentDTO) {
+        Comment existingComment = commentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Comment not found"));
+        existingComment.setText(commentDTO.getText());
+        Comment updatedComment = commentRepository.save(existingComment);
+        return commentMapper.toDTO(updatedComment);
     }
     
     @Override

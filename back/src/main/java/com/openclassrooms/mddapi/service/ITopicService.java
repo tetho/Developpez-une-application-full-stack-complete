@@ -11,5 +11,7 @@ public interface ITopicService {
 
 	public TopicDTO createTopic(TopicDTO topicDTO);
 	
+	public TopicDTO updateTopic(Long id, TopicDTO topicDTO);
+	
 	public void deleteTopic(final Long id);
 }

@@ -8,9 +8,11 @@ public interface IPostService {
 
 	public PostDTO getPostById(Long id);
 	
-	public List<PostDTO> getPostsByTopic(Long topicId);
+	public List<PostDTO> getPostsByTopicId(Long topicId);
 	
 	public PostDTO createPost(PostDTO postDTO);
+	
+	public PostDTO updatePost(Long id, PostDTO postDTO);
 	
 	public void deletePost(Long id);
 }

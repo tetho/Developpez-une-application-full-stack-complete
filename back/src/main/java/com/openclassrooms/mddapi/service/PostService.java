@@ -35,7 +35,7 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<PostDTO> getPostsByTopic(Long topicId) {
+    public List<PostDTO> getPostsByTopicId(Long topicId) {
         List<Post> posts = postRepository.findByTopicId(topicId);
         return posts.stream().map(postMapper::toDTO).collect(Collectors.toList());
     }
@@ -49,6 +49,16 @@ public class PostService implements IPostService {
         post.setTopic(topic);
         Post savedPost = postRepository.save(post);
         return postMapper.toDTO(savedPost);
+    }
+    
+    @Override
+    public PostDTO updatePost(Long id, PostDTO postDTO) {
+        Post existingPost = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+        existingPost.setTitle(postDTO.getTitle());
+        existingPost.setContent(postDTO.getContent());
+        Post updatedPost = postRepository.save(existingPost);
+        return postMapper.toDTO(updatedPost);
     }
     
     @Override

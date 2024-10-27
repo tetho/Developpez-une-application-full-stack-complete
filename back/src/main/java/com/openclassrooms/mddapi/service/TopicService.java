@@ -42,6 +42,15 @@ public class TopicService implements ITopicService {
     }
     
     @Override
+    public TopicDTO updateTopic(Long id, TopicDTO topicDTO) {
+        Topic existingTopic = topicRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Topic not found"));
+        existingTopic.setName(topicDTO.getName());
+        Topic updatedTopic = topicRepository.save(existingTopic);
+        return topicMapper.toDTO(updatedTopic);
+    }
+    
+    @Override
     public void deleteTopic(Long id) {
         Topic topic = topicRepository.findById(id).orElseThrow(() -> new RuntimeException("Topic not found"));
         topicRepository.delete(topic);
