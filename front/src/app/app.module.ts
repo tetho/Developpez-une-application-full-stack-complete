@@ -23,6 +23,8 @@ import { PostsModule } from './features/posts/posts.module';
 import { PostsRoutingModule } from './features/posts/posts-routing.module';
 import { TopicsRoutingModule } from './features/topics/topics-routing.module';
 import { TopicsModule } from './features/topics/topics.module';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { MeComponent } from './features/me/me.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { TopicsModule } from './features/topics/topics.module';
     TopicFormComponent,
     LoginComponent,
     RegisterComponent,
-    HeaderComponent
+    HeaderComponent,
+    NotFoundComponent,
+    MeComponent
   ],
   imports: [
     BrowserModule,
