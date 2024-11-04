@@ -13,6 +13,16 @@ import { TopicDetailComponent } from './features/topics/components/topic-detail/
 import { TopicFormComponent } from './features/topics/components/topic-form/topic-form.component';
 import { LoginComponent } from './features/auth/components/login/login.component';
 import { RegisterComponent } from './features/auth/components/register/register.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthRoutingModule } from './features/auth/auth-routing.module';
+import { AuthModule } from './features/auth/auth.module';
+import { CommentsRoutingModule } from './features/comments/comments-routing.module';
+import { CommentsModule } from './features/comments/comments.module';
+import { PostsModule } from './features/posts/posts.module';
+import { PostsRoutingModule } from './features/posts/posts-routing.module';
+import { TopicsRoutingModule } from './features/topics/topics-routing.module';
+import { TopicsModule } from './features/topics/topics.module';
 
 @NgModule({
   declarations: [
@@ -27,10 +37,20 @@ import { RegisterComponent } from './features/auth/components/register/register.
     TopicDetailComponent,
     TopicFormComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HeaderComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
+    AuthRoutingModule,
+    AuthModule,
+    CommentsRoutingModule,
+    CommentsModule,
+    PostsModule,
+    PostsRoutingModule,
+    TopicsRoutingModule,
+    TopicsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
