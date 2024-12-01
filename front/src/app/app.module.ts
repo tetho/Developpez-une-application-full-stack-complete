@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { PostListComponent } from './features/posts/components/post-list/post-list.component';
@@ -11,8 +12,6 @@ import { CommentDetailComponent } from './features/comments/components/comment-d
 import { TopicListComponent } from './features/topics/components/topic-list/topic-list.component';
 import { TopicDetailComponent } from './features/topics/components/topic-detail/topic-detail.component';
 import { TopicFormComponent } from './features/topics/components/topic-form/topic-form.component';
-import { LoginComponent } from './features/auth/components/login/login.component';
-import { RegisterComponent } from './features/auth/components/register/register.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthRoutingModule } from './features/auth/auth-routing.module';
@@ -25,6 +24,8 @@ import { TopicsRoutingModule } from './features/topics/topics-routing.module';
 import { TopicsModule } from './features/topics/topics.module';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { MeComponent } from './features/me/me.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './features/home/home.component';
 
 @NgModule({
   declarations: [
@@ -38,11 +39,10 @@ import { MeComponent } from './features/me/me.component';
     TopicListComponent,
     TopicDetailComponent,
     TopicFormComponent,
-    LoginComponent,
-    RegisterComponent,
     HeaderComponent,
     NotFoundComponent,
-    MeComponent
+    MeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +54,9 @@ import { MeComponent } from './features/me/me.component';
     PostsModule,
     PostsRoutingModule,
     TopicsRoutingModule,
-    TopicsModule
+    TopicsModule,
+    FlexLayoutModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

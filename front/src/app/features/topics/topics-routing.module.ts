@@ -7,8 +7,8 @@ import { TopicFormComponent } from './components/topic-form/topic-form.component
 const routes: Routes = [
   { path : '', component: TopicListComponent},
   { path : ':id', component: TopicDetailComponent},
-  { path : '/create', component: TopicFormComponent},
-  { path : '/update/:id', component: TopicFormComponent},
+  { path : 'create', component: TopicFormComponent},
+  { path : 'update/:id', component: TopicFormComponent},
 ];
 
 @NgModule({

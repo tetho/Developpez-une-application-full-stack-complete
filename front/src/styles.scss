@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+h1 {
+    margin: 0 !important;
+}
+
+.error {
+    color: red;
+}
+
+.w100 {
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+button[mat-raised-button] {
+    width: 100%;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+:root {
+    --primary-color: #7763c5;
+    --accent-color: #7551eb;
+}

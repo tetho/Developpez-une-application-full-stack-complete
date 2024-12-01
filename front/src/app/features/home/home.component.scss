@@ -1,0 +1,21 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.logo-container {
+    margin-bottom: 50px;
+}
+
+.logo {
+    width: 400px;
+    height: auto;
+}
+
+.button-container {
+    display: flex;
+    gap: 20px;
+}
