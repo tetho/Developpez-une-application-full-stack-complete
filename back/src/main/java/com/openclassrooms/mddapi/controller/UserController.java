@@ -19,7 +19,7 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@GetMapping("/{d}")
+	@GetMapping("/{id}")
 	public UserDTO getUserById(Long id) {
 		return this.userService.getUserById(id);
 	}

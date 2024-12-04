@@ -3,10 +3,13 @@ package com.openclassrooms.mddapi.service;
 import java.util.List;
 
 import com.openclassrooms.mddapi.dto.PostDTO;
+import com.openclassrooms.mddapi.dto.TopicDTO;
 
 public interface IPostService {
 
 	public PostDTO getPostById(Long id);
+	
+	public List<PostDTO> getPosts();
 	
 	public List<PostDTO> getPostsByTopicId(Long topicId);
 	

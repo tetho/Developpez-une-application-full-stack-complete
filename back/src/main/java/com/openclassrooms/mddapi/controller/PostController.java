@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.CommentDTO;
 import com.openclassrooms.mddapi.dto.PostDTO;
+import com.openclassrooms.mddapi.dto.TopicDTO;
 import com.openclassrooms.mddapi.service.ICommentService;
 import com.openclassrooms.mddapi.service.IPostService;
 
@@ -24,12 +25,10 @@ import com.openclassrooms.mddapi.service.IPostService;
 public class PostController {
 
 	private IPostService postService;
-	private ICommentService commentService;
 	
 	@Autowired
 	public PostController(IPostService postService, ICommentService commentService) {
 		this.postService = postService;
-		this.commentService = commentService;
 	}
 	
 	@GetMapping("/{id}")
@@ -37,6 +36,11 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
+	@GetMapping
+    public List<PostDTO> getPosts() {
+        return postService.getPosts();
+    }
+	
     @GetMapping("/topic/{topicId}")
     public List<PostDTO> getPostsByTopicId(@PathVariable Long topicId) {
         return postService.getPostsByTopicId(topicId);
