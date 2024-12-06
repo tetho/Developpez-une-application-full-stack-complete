@@ -1,1 +1,29 @@
-<p>post-list works!</p>
+<div class="list">
+    <mat-card>
+        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+            <button mat-raised-button color="primary" routerLink="create">
+                <span class="ml1">Créer un article</span>
+            </button>             
+        </mat-card-header>
+        <div class="items mt2" fxLayout="row" fxLayout.lt-md="column">
+            <mat-card class="item" *ngFor="let post of (posts$ | async)" fxFlex>
+                <mat-card-header>
+                    <mat-card-title>
+                        <a [routerLink]="['/posts', post.post_id]">{{ post.title }}</a>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="my2" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="center">
+                            <span class="ml1">Date : {{ post.updated_at | date: 'dd/MM/YYYY'}}</span>
+                        </div>
+                        <div fxLayout="center">
+                            <span class="ml1">Auteur : {{ post.user_id }}</span>
+                        </div>
+                    </div>
+                    <p>{{ post.content }}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card>
+</div>

@@ -1,9 +1,10 @@
 import { Post } from "./post.interface";
 
 export interface Topic {
-    id: number;
+    topic_id: number;
     posts: Post[];
     name: string;
-    createdAt: Date;
-    updatedAt: Date;
+    description: string;
+    created_at: Date;
+    updated_at: Date;
 }

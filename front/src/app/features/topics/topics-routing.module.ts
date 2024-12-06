@@ -5,10 +5,10 @@ import { TopicDetailComponent } from './components/topic-detail/topic-detail.com
 import { TopicFormComponent } from './components/topic-form/topic-form.component';
 
 const routes: Routes = [
-  { path : '', component: TopicListComponent},
-  { path : ':id', component: TopicDetailComponent},
-  { path : 'create', component: TopicFormComponent},
-  { path : 'update/:id', component: TopicFormComponent},
+  { title: 'Topics', path : '', component: TopicListComponent},
+  { title: 'Topics - create', path : 'create', component: TopicFormComponent},
+  { title: 'Topics - detail', path : ':id', component: TopicDetailComponent},
+  { title: 'Topics - update', path : 'update/:id', component: TopicFormComponent},
 ];
 
 @NgModule({

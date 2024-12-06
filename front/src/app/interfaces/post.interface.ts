@@ -3,12 +3,12 @@ import { Topic } from "./topic.interface";
 import { User } from "./user.interface";
 
 export interface Post {
-    id: number;
-    topic: Topic;
-    user: User;
+    post_id: number;
+    topic_id: Topic;
+    user_id: User;
     comments: Comment[];
     title: string;
     content: string;
-    createdAt: Date;
-    updatedAt: Date;
+    created_at: Date;
+    updated_at: Date;
 }

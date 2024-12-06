@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/interfaces/user.interface';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-me',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MeComponent implements OnInit {
 
-  constructor() { }
+  public user: User | undefined;
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService) { }
+
+  public ngOnInit(): void {
+    this.authService.me().subscribe(
+      (user: User) => this.user = user
+    )
+  }
+
+  public back() {
+    window.history.back();
   }
 
 }

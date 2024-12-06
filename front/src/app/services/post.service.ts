@@ -2,21 +2,23 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../interfaces/post.interface';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { PostResponse } from '../interfaces/api/post-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  private apiUrl = '/posts';
+  private apiUrl = environment.baseUrl + '/posts';
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Get ppsts by Id
+   * Get all posts
    * @returns 
    */
-  getPosts(): Observable<Post[]> {
+  getAll(): Observable<Post[]> {
     return this.http.get<Post[]>(this.apiUrl);
   }
 
@@ -25,26 +27,26 @@ export class PostService {
    * @param id 
    * @returns 
    */
-  getPostById(id: number): Observable<Post> {
+  getById(id: string): Observable<Post> {
     return this.http.get<Post>(`${this.apiUrl}/${id}`);
   }
 
   /**
    * Create post
-   * @param post 
+   * @param post
    * @returns 
    */
-  createPost(post: Post): Observable<Post> {
+  create(post: Post): Observable<Post> {
     return this.http.post<Post>(this.apiUrl, post);
   }
 
   /**
    * Update post
    * @param id 
-   * @param post 
+   * @param form 
    * @returns 
    */
-  updatePost(id: number, post: Post): Observable<Post> {
+  update(id: string, post: Post): Observable<Post> {
     return this.http.put<Post>(`${this.apiUrl}/${id}`, post);
   }
 
@@ -53,7 +55,7 @@ export class PostService {
    * @param id 
    * @returns 
    */
-  deletePost(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

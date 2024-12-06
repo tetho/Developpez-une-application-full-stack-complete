@@ -1,21 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { CommentResponse } from '../interfaces/api/comment-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
 
-  private apiUrl = '/comments';
+  private apiUrl = environment.baseUrl + '/comments';
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Get comments
+   * Get all comments
    * @returns 
    */
-  getComments(): Observable<Comment[]> {
+  getAll(): Observable<Comment[]> {
     return this.http.get<Comment[]>(this.apiUrl);
   }
 
@@ -24,27 +26,27 @@ export class CommentService {
    * @param id 
    * @returns 
    */
-  getCommentById(id: number): Observable<Comment> {
+  getById(id: number): Observable<Comment> {
     return this.http.get<Comment>(`${this.apiUrl}/${id}`);
   }
 
   /**
    * Create comment
-   * @param comment 
+   * @param form 
    * @returns 
    */
-  createComment(comment: Comment): Observable<Comment> {
-    return this.http.post<Comment>(this.apiUrl, comment);
+  create(form: FormData): Observable<CommentResponse> {
+    return this.http.post<CommentResponse>(this.apiUrl, form);
   }
 
   /**
    * Update comment
    * @param id 
-   * @param comment 
+   * @param form 
    * @returns 
    */
-  updateComment(id: number, comment: Comment): Observable<Comment> {
-    return this.http.put<Comment>(`${this.apiUrl}/${id}`, comment);
+  update(id: string, form: FormData): Observable<CommentResponse> {
+    return this.http.put<CommentResponse>(`${this.apiUrl}/${id}`, form);
   }
 
   /**
@@ -52,7 +54,7 @@ export class CommentService {
    * @param id 
    * @returns 
    */
-  deleteComment(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

@@ -1,1 +1,35 @@
-<p>post-form works!</p>
+<div class="create m3">
+
+    <mat-card>
+        <mat-card-title>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button mat-icon-button routerLink="/posts">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <h1 *ngIf="!onUpdate">Créer un nouvel article</h1>
+                <h1 *ngIf="onUpdate">Mettre à jour un article</h1>
+            </div>
+        </mat-card-title>
+        <mat-card-content *ngIf="postForm">
+            <form class="mt2" fxLayout="column" [formGroup]="postForm" (ngSubmit)="submit()">
+                <mat-form-field appearance="outline">
+                    <mat-select ngDefaultControl formControlName="topic_id">
+                      <mat-option *ngFor="let topic of topics$ | async" [value]="topic.topic_id">
+                        {{topic.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                <mat-form-field appearance="outline" class="" fxFlex>
+                    <input matInput formControlName="title" placeholder="Titre de l'article">
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex>
+                    <textarea matInput rows="8" formControlName="content" placeholder="Contenu de l'article"></textarea>
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <button *ngIf="!onUpdate" mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">Créer</button>
+                    <button *ngIf="onUpdate" mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">Enregistrer</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

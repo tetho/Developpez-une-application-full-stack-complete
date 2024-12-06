@@ -1,1 +1,17 @@
-<p>topic-detail works!</p>
+<div class="detail">
+    <mat-card *ngIf="topic">
+        <mat-card-title>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <h1>{{topic.name | titlecase}}</h1>
+                </div>
+            </div>
+        </mat-card-title>
+        <mat-card-content>
+            <div class="description">
+                <p>Description:</p>
+                {{ topic.description }}
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

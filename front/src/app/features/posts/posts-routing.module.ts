@@ -5,10 +5,10 @@ import { PostDetailComponent } from './components/post-detail/post-detail.compon
 import { PostFormComponent } from './components/post-form/post-form.component';
 
 const routes: Routes = [
-  { path : '', component: PostListComponent},
-  { path : ':id', component: PostDetailComponent},
-  { path : 'create', component: PostFormComponent},
-  { path : 'update/:id', component: PostFormComponent},
+  { title: 'Posts', path : '', component: PostListComponent},
+  { title: 'Posts - create', path : 'create', component: PostFormComponent},
+  { title: 'Posts - detail', path : ':id', component: PostDetailComponent},
+  { title: 'Posts - update', path : 'update/:id', component: PostFormComponent},
 ];
 
 @NgModule({
