@@ -1,24 +1,27 @@
 <div class="create m3">
-
     <mat-card>
         <mat-card-title>
             <div fxLayout="row" fxLayoutAlign="start center">
-                <button mat-icon-button routerLink="/topics">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-                <h1 *ngIf="!onUpdate">Créer un nouveau thème</h1>
-                <h1 *ngIf="onUpdate">Mettre à jour un thème</h1>
+                <div fxFlex="none">
+                    <button mat-icon-button routerLink="/topics">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex fxLayoutAlign="center center">
+                    <h1 *ngIf="!onUpdate">Créer un nouveau thème</h1>
+                    <h1 *ngIf="onUpdate">Mettre à jour un thème</h1>
+                </div>
             </div>
         </mat-card-title>
         <mat-card-content *ngIf="topicForm">
-            <form class="mt2" fxLayout="column" [formGroup]="topicForm" (ngSubmit)="submit()">
-                <mat-form-field appearance="outline" class="" fxFlex>
+            <form class="mt2" fxLayout="column" [formGroup]="topicForm" (ngSubmit)="submit()" class="form-container">
+                <mat-form-field appearance="outline" class="custom-field" fxFlex>
                     <input matInput formControlName="name" placeholder="Titre du thème">
                 </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex>
+                <mat-form-field appearance="outline" class="custom-field" fxFlex>
                     <textarea matInput rows="8" formControlName="description" placeholder="Description du thème"></textarea>
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="center center">
+                <div fxLayout="row" fxLayoutAlign="center center" class="form-button">
                     <button *ngIf="!onUpdate" mat-raised-button color="primary" type="submit" [disabled]="topicForm.invalid">Créer</button>
                     <button *ngIf="onUpdate" mat-raised-button color="primary" type="submit" [disabled]="topicForm.invalid">Enregister</button>
                 </div>

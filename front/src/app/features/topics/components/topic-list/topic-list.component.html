@@ -1,21 +1,23 @@
 <div class="list">
     <mat-card>
         <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
-            <button mat-raised-button color="primary" routerLink="create">
-                <span class="ml1">Créer un thème</span>
+            <button mat-raised-button color="primary" routerLink="create" class="create-button">
+                <span>Créer un thème</span>
             </button>
         </mat-card-header>
-        <div class="items mt2" fxLayout="row" fxLayout.lt-md="column">
-            <mat-card class="item" *ngFor="let topic of (topics$ | async)" fxFlex>
+        <div class="items" fxLayout="row" fxLayout.lt-md="column">
+            <mat-card class="item" *ngFor="let topic of (topics$ | async)">
                 <mat-card-header>
-                    <mat-card-title>{{ topic.name }}</mat-card-title>
+                    <mat-card-title>
+                        <a [routerLink]="['/topics', topic.topic_id]">{{ topic.name | titlecase }}</a>
+                    </mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
                     <p>{{ topic.description }}</p>
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-raised-button color="primary" [routerLink]="['detail',topic.topic_id]">
-                        <span class="ml1">S'abonner</span>
+                        <span>S'abonner</span>
                     </button>
                 </mat-card-actions>
             </mat-card>

@@ -1,9 +1,8 @@
 <div class="create m3">
-
     <mat-card>
         <mat-card-title>
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <button mat-icon-button routerLink="/posts">
+            <div class="header">
+                <button mat-icon-button routerLink="/posts" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <h1 *ngIf="!onUpdate">Créer un nouvel article</h1>
@@ -11,21 +10,21 @@
             </div>
         </mat-card-title>
         <mat-card-content *ngIf="postForm">
-            <form class="mt2" fxLayout="column" [formGroup]="postForm" (ngSubmit)="submit()">
+            <form class="mt2" fxLayout="column" [formGroup]="postForm" (ngSubmit)="submit()" class="form-container">
                 <mat-form-field appearance="outline">
                     <mat-select ngDefaultControl formControlName="topic_id">
                       <mat-option *ngFor="let topic of topics$ | async" [value]="topic.topic_id">
-                        {{topic.name}}
+                        {{topic.name | titlecase}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                <mat-form-field appearance="outline" class="" fxFlex>
+                <mat-form-field appearance="outline" class="custom-field" fxFlex>
                     <input matInput formControlName="title" placeholder="Titre de l'article">
                 </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex>
+                <mat-form-field appearance="outline" class="custom-field" fxFlex>
                     <textarea matInput rows="8" formControlName="content" placeholder="Contenu de l'article"></textarea>
                 </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="center center">
+                <div fxLayout="row" fxLayoutAlign="center center" class="form-button">
                     <button *ngIf="!onUpdate" mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">Créer</button>
                     <button *ngIf="onUpdate" mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">Enregistrer</button>
                 </div>

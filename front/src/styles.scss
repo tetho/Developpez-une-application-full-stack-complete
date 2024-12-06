@@ -7,31 +7,257 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
-h1 {
-    margin: 0 !important;
-}
-
 .error {
     color: red;
 }
 
-.w100 {
-    width: 100%;
+a {
+    color: #000000;
+    text-decoration: none;
+    
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    margin-top: 10px;
+.items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.item {
+    width: calc(50% - 16px);
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+}
+
+@media (max-width: 768px) {
+    .item {
+        width: 100%;
+    }
 }
 
 button[mat-raised-button] {
+    min-width: 150px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: var(--primary-color) !important;
+    color: white;
+}
+
+.create-button {
+    margin-left: -32px !important;
+    margin-bottom: 16px !important;
+}
+
+mat-card {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+mat-card-header {
+    display: flex;
+    align-items: center;
+}
+
+mat-card-title {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+}
+
+mat-card-title h1 {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+}
+
+mat-card-content {
+    text-align: left;
+    padding: 0px 16px 0px 16px;
+}
+
+mat-card-actions {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+mat-form-field.custom-field {
+    .mat-form-field-outline {
+        stroke: var(--primary-color) !important;
+    }
+
+    &.mat-focused .mat-form-field-outline-thick {
+        stroke: var(--accent-color) !important;
+    }
+
+    &.mat-form-field-invalid .mat-form-field-outline {
+        stroke: red !important;
+    }
+}
+
+.create {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 24px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     width: 100%;
-    border-radius: 8px;
-    font-size: 16px;
+}
+
+.form-field {
+    width: 100%;
+}
+
+.form-button {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.list {
+    .info-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+
+        .info-item {
+            font-size: 14px;
+            color: #555;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .info-row {
+            flex-direction: column;
+            gap: 8px;
+        }
+    }
+}
+
+.detail {
+    mat-card {
+        padding: 24px;
+    }
+
+    mat-card-content {
+        margin: 24px 32px 24px 32px;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        button {
+            flex-shrink: 0;
+        }
+
+        h1 {
+            margin: 0;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            flex-grow: 1;
+        }
+    }
+
+    .info-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+
+        .info-item {
+            font-size: 14px;
+            color: #555;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            align-items: stretch;
+
+            h1 {
+                text-align: center;
+                margin-top: 8px;
+            }
+        }
+
+        .info-row {
+            flex-direction: column;
+            gap: 8px;
+        }
+    }
+
+    .description {
+        margin-top: 16px;
+    }
+
+    .custom-content {
+        width: 400px !important;
+        margin: 0 auto;
+    }
+}
+
+.create {
+    width: 100%;
+
+    mat-card {
+        padding: 0px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    mat-card-content {
+        margin: 0 auto;
+        min-width: 200px;
+        max-width: 400px;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        button {
+            flex-shrink: 0;
+        }
+
+        h1 {
+            margin: 0;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            flex-grow: 1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            align-items: stretch;
+
+            h1 {
+                text-align: center;
+                margin-top: 8px;
+            }
+        }
+    }
+
 }
 
 :root {

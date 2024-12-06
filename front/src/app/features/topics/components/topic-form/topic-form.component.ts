@@ -10,7 +10,7 @@ import { TopicService } from 'src/app/services/topic.service';
 @Component({
   selector: 'app-topic-form',
   templateUrl: './topic-form.component.html',
-  styleUrls: ['./topic-form.component.scss']
+  styleUrls: ['./topic-form.component.scss'],
 })
 export class TopicFormComponent implements OnInit {
 
