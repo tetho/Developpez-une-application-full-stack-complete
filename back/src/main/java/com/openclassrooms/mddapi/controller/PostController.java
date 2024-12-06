@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.mddapi.dto.CommentDTO;
 import com.openclassrooms.mddapi.dto.PostDTO;
-import com.openclassrooms.mddapi.dto.TopicDTO;
 import com.openclassrooms.mddapi.service.ICommentService;
 import com.openclassrooms.mddapi.service.IPostService;
 
@@ -46,7 +44,7 @@ public class PostController {
         return postService.getPostsByTopicId(topicId);
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
         PostDTO createdPost = postService.createPost(postDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);

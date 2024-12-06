@@ -21,8 +21,8 @@ public class AuthService implements IAuthService {
     }
 
 	@Override
-	public boolean authenticate(String email, String password) {
-		Optional<UserDTO> optionalUser = userService.findByEmail(email);
+	public boolean authenticate(String emailOrUsername, String password) {
+		Optional<UserDTO> optionalUser = userService.findByEmailOrUsername(emailOrUsername);
         if (optionalUser.isPresent()) {
             UserDTO user = optionalUser.get();
             return passwordEncoder.matches(password, user.getPassword());

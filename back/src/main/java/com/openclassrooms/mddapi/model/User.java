@@ -1,15 +1,11 @@
 package com.openclassrooms.mddapi.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -33,12 +29,6 @@ public class User {
 	private String password;
 	
 	private String role;
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Post> posts;
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Comment> comments;
 	
 	@Column(name = "created_at", updatable = false)
 	private LocalDateTime createdAt;

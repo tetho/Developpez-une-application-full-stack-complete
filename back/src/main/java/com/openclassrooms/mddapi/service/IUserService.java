@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import com.openclassrooms.mddapi.dto.UserDTO;
-import com.openclassrooms.mddapi.model.User;
 
 public interface IUserService {
 
 	public Optional<UserDTO> findByEmail(String email);
+	
+	public Optional<UserDTO> findByUsername(String username);
+	
+	public Optional<UserDTO> findByEmailOrUsername(String emailOrUsername);
 	
 	public UserDTO getUserById(Long id);
 	

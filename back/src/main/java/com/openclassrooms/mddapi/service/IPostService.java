@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.service;
 import java.util.List;
 
 import com.openclassrooms.mddapi.dto.PostDTO;
-import com.openclassrooms.mddapi.dto.TopicDTO;
 
 public interface IPostService {
 

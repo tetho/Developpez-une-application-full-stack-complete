@@ -15,6 +15,8 @@ public class TopicDTO {
 	
 	private String name;
 	
+	private String description;
+	
     private List<PostDTO> posts;
 	
 	@JsonProperty("created_at")

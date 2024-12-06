@@ -20,10 +20,28 @@ public class UserService implements IUserService {
 
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
+    @Override
     public Optional<UserDTO> findByEmail(String email) {
 		Optional<User> user = userRepository.findByEmail(email);
 	    return user.map(userMapper::toDTO);
     }
+    
+    @Override
+    public Optional<UserDTO> findByUsername(String username) {
+		Optional<User> user = userRepository.findByUsername(username);
+	    return user.map(userMapper::toDTO);
+    }
+    
+    @Override
+	public Optional<UserDTO> findByEmailOrUsername(String emailOrUsername) {
+    	Optional<User> userByEmail = userRepository.findByEmail(emailOrUsername);
+        if (userByEmail.isPresent()) {
+            return userByEmail.map(userMapper::toDTO);
+        } else {
+        	Optional<User> userByUsername = userRepository.findByUsername(emailOrUsername);
+            return userByUsername.map(userMapper::toDTO);	
+        }
+	}
     
     @Override
     public UserDTO getUserById(Long id) {

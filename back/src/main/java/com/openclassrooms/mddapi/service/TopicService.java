@@ -1,10 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +43,7 @@ public class TopicService implements ITopicService {
         Topic existingTopic = topicRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Topic not found"));
         existingTopic.setName(topicDTO.getName());
+        existingTopic.setDescription(topicDTO.getDescription());
         Topic updatedTopic = topicRepository.save(existingTopic);
         return topicMapper.toDTO(updatedTopic);
     }
