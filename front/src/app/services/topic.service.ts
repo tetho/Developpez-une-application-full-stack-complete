@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Topic } from '../interfaces/topic.interface';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { TopicResponse } from '../interfaces/api/topic-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TopicService {
 
-  private apiUrl = '/topics';
+  private apiUrl = environment.baseUrl + '/topics';
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +18,7 @@ export class TopicService {
    * Get topics
    * @returns 
    */
-  getTopics(): Observable<Topic[]> {
+  getAll(): Observable<Topic[]> {
     return this.http.get<Topic[]>(this.apiUrl);
   }
 
@@ -25,16 +27,16 @@ export class TopicService {
    * @param id 
    * @returns 
    */
-  getTopicById(id: number): Observable<Topic> {
+  getById(id: string): Observable<Topic> {
     return this.http.get<Topic>(`${this.apiUrl}/${id}`);
   }
 
   /**
    * Create topic
-   * @param topic 
+   * @param topic
    * @returns 
    */
-  createTopic(topic: Topic): Observable<Topic> {
+  create(topic: Topic): Observable<Topic> {
     return this.http.post<Topic>(this.apiUrl, topic);
   }
 
@@ -44,7 +46,7 @@ export class TopicService {
    * @param topic 
    * @returns 
    */
-  updateTopic(id: number, topic: Topic): Observable<Topic> {
+  update(id: string, topic: Topic): Observable<Topic> {
     return this.http.put<Topic>(`${this.apiUrl}/${id}`, topic);
   }
 
@@ -53,7 +55,7 @@ export class TopicService {
    * @param id 
    * @returns 
    */
-  deleteTopic(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

@@ -6,8 +6,8 @@ import { CommentFormComponent } from './components/comment-form/comment-form.com
 
 const routes: Routes = [
   { path : '', component: CommentListComponent},
-  { path : ':id', component: CommentDetailComponent},
   { path : 'create', component: CommentFormComponent},
+  { path : ':id', component: CommentDetailComponent},
   { path : 'update/:id', component: CommentFormComponent},
 ];
 

@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { UnauthGuard } from './guards/unauth.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -10,28 +9,28 @@ import { HomeComponent } from './features/home/home.component';
 const routes: Routes = [
   {
     path: '',
-    canActivate: [UnauthGuard],
+    //canActivate: [UnauthGuard],
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'home',
-    canActivate: [UnauthGuard],
+    //canActivate: [UnauthGuard],
     component: HomeComponent
   },
   {
-    path: 'posts',
-    canActivate: [UnauthGuard],
-    loadChildren: () => import('./features/posts/posts.module').then(m => m.PostsModule)
+    path: 'me',
+    //canActivate: [AuthGuard],
+    component: MeComponent
   },
   {
     path: 'topics',
-    canActivate: [UnauthGuard],
+    //canActivate: [AuthGuard],
     loadChildren: () => import('./features/topics/topics.module').then(m => m.TopicsModule)
   },
   {
-    path: 'me',
-    canActivate: [UnauthGuard],
-    component: MeComponent
+    path: 'posts',
+    //canActivate: [AuthGuard],
+    loadChildren: () => import('./features/posts/posts.module').then(m => m.PostsModule)
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }

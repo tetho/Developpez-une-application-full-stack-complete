@@ -26,19 +26,17 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { MeComponent } from './features/me/me.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './features/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCard, MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostListComponent,
-    PostDetailComponent,
-    PostFormComponent,
-    CommentFormComponent,
-    CommentListComponent,
-    CommentDetailComponent,
-    TopicListComponent,
-    TopicDetailComponent,
-    TopicFormComponent,
     HeaderComponent,
     NotFoundComponent,
     MeComponent,
@@ -56,7 +54,14 @@ import { HomeComponent } from './features/home/home.component';
     TopicsRoutingModule,
     TopicsModule,
     FlexLayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
