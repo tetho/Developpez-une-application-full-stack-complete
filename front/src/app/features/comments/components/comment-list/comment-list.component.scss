@@ -1,0 +1,43 @@
+p {
+    padding-left: 16px;
+}
+
+.items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0px !important;
+}
+
+.item {
+    width: 90%;
+    margin: 0 auto;
+    background:none;
+    padding: 0px;
+}
+
+.content-row {
+    display: flex;
+    align-items: center;
+    vertical-align: top;
+    margin: 0px;
+    padding: 0px;
+}
+
+.info-item {
+    margin: 0px;
+}
+
+mat-card-content {
+    flex: 1;
+    margin-top: 8px;
+    padding: 12px;
+}
+
+.content-box {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 12px;
+    margin-bottom: 16px;
+    
+}

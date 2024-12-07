@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CommentResponse } from '../interfaces/api/comment-response';
+import { Comment } from 'src/app/interfaces/comment.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,22 +32,31 @@ export class CommentService {
   }
 
   /**
-   * Create comment
-   * @param form 
+   * Get comments by post id
+   * @param postId 
    * @returns 
    */
-  create(form: FormData): Observable<CommentResponse> {
-    return this.http.post<CommentResponse>(this.apiUrl, form);
+  getByPostId(postId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${this.apiUrl}/post/${postId}`);
+  }
+
+  /**
+   * Create comment
+   * @param comment 
+   * @returns 
+   */
+  create(comment: Comment): Observable<Comment> {
+    return this.http.post<Comment>(this.apiUrl, comment);
   }
 
   /**
    * Update comment
    * @param id 
-   * @param form 
+   * @param comment 
    * @returns 
    */
-  update(id: string, form: FormData): Observable<CommentResponse> {
-    return this.http.put<CommentResponse>(`${this.apiUrl}/${id}`, form);
+  update(id: string, comment: Comment): Observable<Comment> {
+    return this.http.put<Comment>(`${this.apiUrl}/${id}`, comment);
   }
 
   /**

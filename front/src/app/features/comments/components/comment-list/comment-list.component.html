@@ -1,1 +1,17 @@
-<p>comment-list works!</p>
+<div class="comment-list">
+    <mat-card>
+        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+            <p>Commentaires</p>
+        </mat-card-header>
+        <div class="items" fxLayout="row" fxLayout.lt-md="column">
+            <mat-card class="item" *ngFor="let comment of (comments$ | async)">
+                <div class="content-row">
+                    <p class="info-item">Auteur : <!--{{ comment.user_id }}--></p>
+                    <mat-card-content class="content-box">
+                        <p>{{ comment.text }}</p>
+                    </mat-card-content>
+                </div>
+            </mat-card>
+        </div>
+    </mat-card>
+</div>

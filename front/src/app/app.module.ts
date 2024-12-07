@@ -43,7 +43,6 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     AuthRoutingModule,
     AuthModule,
     CommentsRoutingModule,
-    CommentsModule,
     PostsModule,
     PostsRoutingModule,
     TopicsRoutingModule,

@@ -22,6 +22,10 @@ a {
     }
 }
 
+p {
+    font-size: 14px;
+}
+
 hr {
     border: 1px thin #000000;
     margin-left: 16px;
@@ -139,7 +143,6 @@ mat-form-field.custom-field {
 
         .info-item {
             font-size: 14px;
-            color: #555;
         }
     }
 
@@ -187,7 +190,6 @@ mat-form-field.custom-field {
 
         .info-item {
             font-size: 14px;
-            color: #555;
         }
     }
 
