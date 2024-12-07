@@ -26,7 +26,7 @@ export class UserService {
    * @param id 
    * @returns 
    */
-  getUserById(id: number): Observable<User> {
+  getById(id: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
@@ -35,7 +35,7 @@ export class UserService {
    * @param user 
    * @returns 
    */
-  createUser(user: User): Observable<User> {
+  create(user: User): Observable<User> {
     return this.http.post<User>(this.apiUrl, user);
   }
 
@@ -45,7 +45,7 @@ export class UserService {
    * @param user 
    * @returns 
    */
-  updateUser(id: number, user: User): Observable<User> {
+  update(id: string, user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/${id}`, user);
   }
 
@@ -54,7 +54,7 @@ export class UserService {
    * @param id 
    * @returns 
    */
-  deleteUser(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

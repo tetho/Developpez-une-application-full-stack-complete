@@ -11,8 +11,8 @@
         <mat-card-content>
             <div class="info-row" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="16px">
                 <span class="info-item">Date : {{ post.updated_at | date: 'dd/MM/YYYY' }}</span>
-                <span class="info-item">Auteur : <!-- {{ post.user_id.username }} --></span>
-                <span class="info-item">Thème : {{ post.topic_id }}</span>
+                <span class="info-item" *ngIf="author">Auteur : {{ author.username }}</span>
+                <span class="info-item" *ngIf="topic">Thème : {{ topic.name }}</span>
             </div>
             <div class="description">
                 {{ post.content }}

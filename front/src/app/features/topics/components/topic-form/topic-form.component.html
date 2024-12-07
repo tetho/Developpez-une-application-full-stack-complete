@@ -1,16 +1,12 @@
 <div class="create m3">
     <mat-card>
         <mat-card-title>
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <div fxFlex="none">
-                    <button mat-icon-button routerLink="/topics">
-                        <mat-icon>arrow_back</mat-icon>
-                    </button>
-                </div>
-                <div fxFlex fxLayoutAlign="center center">
-                    <h1 *ngIf="!onUpdate">Créer un nouveau thème</h1>
-                    <h1 *ngIf="onUpdate">Mettre à jour un thème</h1>
-                </div>
+            <div class="header">
+                <button mat-icon-button routerLink="/posts" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <h1 *ngIf="!onUpdate">Créer un nouveau thème</h1>
+                <h1 *ngIf="onUpdate">Mettre à jour un thème</h1>
             </div>
         </mat-card-title>
         <mat-card-content *ngIf="topicForm">

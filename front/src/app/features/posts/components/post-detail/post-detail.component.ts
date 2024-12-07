@@ -3,25 +3,30 @@ import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from 'src/app/interfaces/post.interface';
+import { Topic } from 'src/app/interfaces/topic.interface';
+import { User } from 'src/app/interfaces/user.interface';
 import { PostService } from 'src/app/services/post.service';
 import { SessionService } from 'src/app/services/session.service';
+import { TopicService } from 'src/app/services/topic.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.scss']
-  
+
 })
 export class PostDetailComponent implements OnInit {
 
   public post!: Post;
-  public author!: string;
+  public topic!: Topic | undefined;
+  public author!: User | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private postService: PostService,
+    private topicService: TopicService,
     private userService: UserService,
     private sessionService: SessionService,
     private matSnackBar: MatSnackBar
@@ -30,7 +35,17 @@ export class PostDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.postService.getById(id).subscribe({
-      next: (post) => (this.post = post),
+      next: (post) => {
+        this.post = post;
+        this.userService.getById(String(post.user_id)).subscribe({
+          next: (user) => (this.author = user),
+          error: (err) => console.error('Erreur lors du chargement de l\'auteur :', err),
+        });
+        this.topicService.getById(String(post.topic_id)).subscribe({
+          next: (topic) => (this.topic = topic),
+          error: (err) => console.error('Erreur lors du chargement du topic :', err),
+        });
+      },
       error: (err) => console.error('Erreur lors du chargement du post :', err),
     });
   }

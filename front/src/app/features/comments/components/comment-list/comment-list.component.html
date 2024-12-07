@@ -6,7 +6,7 @@
         <div class="items" fxLayout="row" fxLayout.lt-md="column">
             <mat-card class="item" *ngFor="let comment of (comments$ | async)">
                 <div class="content-row">
-                    <p class="info-item">Auteur : <!--{{ comment.user_id }}--></p>
+                    <p class="info-item">{{ user?.username }}</p>
                     <mat-card-content class="content-box">
                         <p>{{ comment.text }}</p>
                     </mat-card-content>

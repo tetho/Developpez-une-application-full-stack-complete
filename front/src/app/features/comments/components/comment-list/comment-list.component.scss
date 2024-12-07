@@ -21,10 +21,13 @@ p {
     vertical-align: top;
     margin: 0px;
     padding: 0px;
+    align-self: flex-start
 }
 
 .info-item {
     margin: 0px;
+    align-self: flex-start;
+    padding-top: 20px;
 }
 
 mat-card-content {
