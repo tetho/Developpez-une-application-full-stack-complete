@@ -3,6 +3,8 @@ package com.openclassrooms.mddapi.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Lob;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
@@ -15,6 +17,7 @@ public class TopicDTO {
 	
 	private String name;
 	
+	@Lob
 	private String description;
 	
     private List<PostDTO> posts;

@@ -4,10 +4,12 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -25,14 +27,15 @@ public class Comment {
 	@Column(name = "comment_id")
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name = "post_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "post_id", referencedColumnName = "post_id")
 	private Post post;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
+	@Lob
 	private String text;
 	
 	@Column(name = "created_at", updatable = false)

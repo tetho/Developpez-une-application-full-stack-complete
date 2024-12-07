@@ -18,9 +18,7 @@ public class UserDTO {
     
 	private String password;
     
-    private String role;
-    
-	@JsonProperty("created_at")
+    @JsonProperty("created_at")
 	private LocalDateTime createdAt;
 	
 	@JsonProperty("updated_at")

@@ -31,7 +31,7 @@ public class SpringSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                	    .antMatchers("/comments/**", "/posts/**", "/topics/**", "/user/**", "/auth/me").authenticated()
+                	    .antMatchers("/comments/**", "/posts/**", "/topics/**", "/users/**", "/auth/me").authenticated()
                 	    .anyRequest().permitAll())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .build();       

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -31,6 +32,7 @@ public class Topic {
 	@Column(nullable = false)
 	private String name;
 
+	@Lob
 	@Column(nullable = false)
 	private String description;
 	

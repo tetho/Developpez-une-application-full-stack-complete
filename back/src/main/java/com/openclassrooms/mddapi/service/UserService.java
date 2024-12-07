@@ -69,7 +69,6 @@ public class UserService implements IUserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         existingUser.setUsername(userDTO.getUsername());
         existingUser.setEmail(userDTO.getEmail());
-        existingUser.setRole(userDTO.getRole());
         User updatedUser = userRepository.save(existingUser);
         return userMapper.toDTO(updatedUser);
     }

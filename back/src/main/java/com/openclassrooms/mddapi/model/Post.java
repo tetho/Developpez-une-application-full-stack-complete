@@ -6,10 +6,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -28,12 +30,12 @@ public class Post {
 	@Column(name="post_id")
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name = "topic_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "topic_id", referencedColumnName = "topic_id")
 	private Topic topic;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -41,6 +43,7 @@ public class Post {
 	
 	private String title;
 	
+	@Lob
 	private String content;
 	
 	@Column(name = "created_at", updatable = false)

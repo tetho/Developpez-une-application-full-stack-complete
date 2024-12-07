@@ -28,8 +28,6 @@ public class User {
 	
 	private String password;
 	
-	private String role;
-	
 	@Column(name = "created_at", updatable = false)
 	private LocalDateTime createdAt;
 
