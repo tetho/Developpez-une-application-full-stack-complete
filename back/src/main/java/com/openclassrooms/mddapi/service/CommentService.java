@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.CommentDTO;
@@ -41,10 +42,13 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public CommentDTO createComment(CommentDTO commentDTO) {
+    public CommentDTO createComment(CommentDTO commentDTO, Authentication authentication) {
         Comment comment = commentMapper.toEntity(commentDTO);
         Post post = postRepository.findById(commentDTO.getPostId()).orElseThrow(() -> new RuntimeException("Post not found"));
-        User user = userRepository.findById(commentDTO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+        String emailOrUsername = authentication.getName();
+        User user = userRepository.findByEmail(emailOrUsername)
+                .or(() -> userRepository.findByUsername(emailOrUsername))
+                .orElseThrow(() -> new RuntimeException("User not found"));
         comment.setPost(post);
         comment.setUser(user);
         Comment savedComment = commentRepository.save(comment);

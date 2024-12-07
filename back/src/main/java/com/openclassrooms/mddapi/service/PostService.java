@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.PostDTO;
@@ -48,9 +49,12 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public PostDTO createPost(PostDTO postDTO) {
+    public PostDTO createPost(PostDTO postDTO, Authentication authentication) {
         Post post = postMapper.toEntity(postDTO);
-        User user = userRepository.findById(postDTO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+        String emailOrUsername = authentication.getName();
+        User user = userRepository.findByEmail(emailOrUsername)
+                .or(() -> userRepository.findByUsername(emailOrUsername))
+                .orElseThrow(() -> new RuntimeException("User not found"));
         Topic topic = topicRepository.findById(postDTO.getTopicId()).orElseThrow(() -> new RuntimeException("Topic not found"));
         post.setUser(user);
         post.setTopic(topic);

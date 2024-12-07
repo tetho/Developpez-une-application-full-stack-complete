@@ -2,6 +2,8 @@ package com.openclassrooms.mddapi.service;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+
 import com.openclassrooms.mddapi.dto.PostDTO;
 
 public interface IPostService {
@@ -12,7 +14,7 @@ public interface IPostService {
 	
 	public List<PostDTO> getPostsByTopicId(Long topicId);
 	
-	public PostDTO createPost(PostDTO postDTO);
+	public PostDTO createPost(PostDTO postDTO, Authentication authentication);
 	
 	public PostDTO updatePost(Long id, PostDTO postDTO);
 	
