@@ -7,13 +7,13 @@
         </mat-card-title>
         <mat-card-content fxLayout="column">
             <form class="login-form" fxLayout="column" [formGroup]="meForm" (ngSubmit)="submit()" class="form-container">
-                <span>E-mail ou nom d'utilisateur</span>
+                <span>Nom d'utilisateur</span>
                 <mat-form-field appearance="outline" class="custom-field" fxFlex>
                     <input matInput formControlName="username">
                 </mat-form-field>
-                <span>Mot de passe</span>
+                <span>E-mail</span>
                 <mat-form-field appearance="outline" class="custom-field" fxFlex>
-                    <input matInput type="password" formControlName="password">
+                    <input matInput formControlName="email">
                 </mat-form-field>
                 <div fxLayout="row" fxLayoutAlign="center center" class="form-button">
                     <button mat-raised-button color="primary" type="submit" [disabled]="meForm.invalid">Sauvegarder</button>

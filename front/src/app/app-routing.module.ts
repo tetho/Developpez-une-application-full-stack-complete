@@ -11,38 +11,38 @@ import { RegisterComponent } from './features/auth/components/register/register.
 const routes: Routes = [
   {
     path: '',
-    //canActivate: [UnauthGuard],
+    canActivate: [UnauthGuard],
     //loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
     component: HomeComponent
   },
   {
     path: 'home',
-    //canActivate: [UnauthGuard],
+    canActivate: [UnauthGuard],
     component: HomeComponent
   },
   {
     path: 'login',
-    //canActivate: [UnauthGuard],
+    canActivate: [UnauthGuard],
     component: LoginComponent
   },
   {
     path: 'register',
-    //canActivate: [UnauthGuard],
+    canActivate: [UnauthGuard],
     component: RegisterComponent
   },
   {
     path: 'me',
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: MeComponent
   },
   {
     path: 'topics',
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./features/topics/topics.module').then(m => m.TopicsModule)
   },
   {
     path: 'posts',
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./features/posts/posts.module').then(m => m.PostsModule)
   },
   { path: '404', component: NotFoundComponent },

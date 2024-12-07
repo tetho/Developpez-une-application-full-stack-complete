@@ -13,7 +13,9 @@ import { Observable } from 'rxjs';
   templateUrl: './me.component.html',
   styleUrls: ['./me.component.scss']
 })
-export class MeComponent {
+export class MeComponent implements OnInit {
+
+  public user: User | undefined;
 
   public onError = false;
 
@@ -39,6 +41,22 @@ export class MeComponent {
               private fb: FormBuilder,
               private router: Router,
               private sessionService: SessionService) {
+  }
+
+  public ngOnInit(): void {
+    this.authService.me().subscribe(
+      (user: User) => {
+        this.user = user;
+  
+        this.meForm.patchValue({
+          username: user.username,
+          email: user.email
+        });
+      },
+      error => {
+        this.onError = true;
+      }
+    );
   }
 
   public submit(): void {

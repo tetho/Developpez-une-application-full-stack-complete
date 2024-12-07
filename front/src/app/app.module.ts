@@ -14,7 +14,7 @@ import { TopicsRoutingModule } from './features/topics/topics-routing.module';
 import { TopicsModule } from './features/topics/topics.module';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { MeComponent } from './features/me/me.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './features/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCard, MatCardModule } from '@angular/material/card';
@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatInputModule,
     MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
