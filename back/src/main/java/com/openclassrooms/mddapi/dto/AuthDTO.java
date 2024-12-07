@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AuthDTO {
 
-	private String emailOrUsername;
+	private String username;
 	
 	private String password;
 }

@@ -57,10 +57,9 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody AuthDTO user) {
-		boolean isAuthenticated = authService.authenticate(user.getEmailOrUsername(), user.getPassword());
-
-		if (isAuthenticated) {
-			Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmailOrUsername(), user.getPassword());
+		boolean isAuthenticated = authService.authenticate(user.getUsername(), user.getPassword());
+		if (isAuthenticated) { 
+			Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 			String token = jwtService.generateToken(authentication);
 			JwtDTO jwtDTO = new JwtDTO();
 			jwtDTO.setToken(token);
@@ -72,7 +71,7 @@ public class AuthController {
 	
 	@GetMapping("/me")
 	public ResponseEntity<UserDTO> getCurrentUser(Authentication authentication) {
-        String emailOrUsername = authentication.getName();
+		String emailOrUsername = authentication.getName();
         Optional<UserDTO> optionalUserDTO = userService.findByEmailOrUsername(emailOrUsername);
         if (optionalUserDTO.isPresent()) {
             UserDTO userDTO = optionalUserDTO.get();
