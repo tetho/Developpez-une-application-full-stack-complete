@@ -1,1 +1,14 @@
-<p>comment-form works!</p>
+<div class="create-component">
+    <mat-card>
+        <mat-card-content *ngIf="commentForm">
+            <form class="mt2" fxLayout="column" [formGroup]="commentForm" (ngSubmit)="submit()" class="form-container">
+                <mat-form-field appearance="outline" class="custom-field" fxFlex>
+                    <textarea matInput rows="8" formControlName="text" placeholder="Ecrivez ici votre commentaire"></textarea>
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="center center" class="form-button">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid">Créer</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

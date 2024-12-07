@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { Comment } from 'src/app/interfaces/comment.interface';
 import { Post } from 'src/app/interfaces/post.interface';
 import { Topic } from 'src/app/interfaces/topic.interface';
 import { User } from 'src/app/interfaces/user.interface';
+import { CommentService } from 'src/app/services/comment.service';
 import { PostService } from 'src/app/services/post.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TopicService } from 'src/app/services/topic.service';
@@ -21,6 +23,7 @@ export class PostDetailComponent implements OnInit {
   public post!: Post;
   public topic!: Topic | undefined;
   public author!: User | undefined;
+  public comments: Comment[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +31,7 @@ export class PostDetailComponent implements OnInit {
     private postService: PostService,
     private topicService: TopicService,
     private userService: UserService,
+    private commentService: CommentService,
     private sessionService: SessionService,
     private matSnackBar: MatSnackBar
   ) {}
@@ -49,5 +53,4 @@ export class PostDetailComponent implements OnInit {
       error: (err) => console.error('Erreur lors du chargement du post :', err),
     });
   }
-
 }

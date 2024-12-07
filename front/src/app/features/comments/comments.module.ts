@@ -23,7 +23,7 @@ const materialModules = [
 @NgModule({
   declarations: [
     //CommentListComponent,
-    CommentFormComponent,
+    //CommentFormComponent,
     CommentDetailComponent
   ],
   imports: [

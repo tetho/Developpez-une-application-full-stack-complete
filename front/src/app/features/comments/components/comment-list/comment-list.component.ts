@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Comment } from 'src/app/interfaces/comment.interface';
 import { User } from 'src/app/interfaces/user.interface';
 import { CommentService } from 'src/app/services/comment.service';
 import { SessionService } from 'src/app/services/session.service';
@@ -8,16 +11,22 @@ import { SessionService } from 'src/app/services/session.service';
   templateUrl: './comment-list.component.html',
   styleUrls: ['./comment-list.component.scss']
 })
-export class CommentListComponent {
+export class CommentListComponent  implements OnInit {
 
-  //@Input() postId!: number;
-  postId = 1;
-  public comments$ = this.commentService.getByPostId(this.postId);
-
+  public comments$!: Observable<Comment[]>;
+  
   constructor(
+    private route: ActivatedRoute,
     private sessionService: SessionService,
     private commentService: CommentService
   ) { }
+
+  ngOnInit(): void {
+    const postId = this.route.snapshot.paramMap.get('id');
+    if (postId) {
+      this.comments$ = this.commentService.getByPostId(Number(postId));
+    }
+  }
 
   get user(): User | undefined {
     return this.sessionService.user;

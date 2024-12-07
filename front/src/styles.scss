@@ -18,7 +18,8 @@ a {
     text-decoration: none;
     
     &:hover {
-        text-decoration: underline;
+        color: var(--primary-color);
+        text-decoration: none;
     }
 }
 
@@ -138,7 +139,7 @@ mat-form-field.custom-field {
     .info-row {
         display: flex;
         flex-wrap: wrap;
-        gap: 16px;
+        gap: 64px;
         align-items: center;
 
         .info-item {
@@ -185,7 +186,7 @@ mat-form-field.custom-field {
     .info-row {
         display: flex;
         flex-wrap: wrap;
-        gap: 16px;
+        gap: 64px;
         align-items: center;
 
         .info-item {
