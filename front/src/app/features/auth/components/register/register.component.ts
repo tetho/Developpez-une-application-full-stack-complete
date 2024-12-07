@@ -16,7 +16,7 @@ export class RegisterComponent {
 
   public onError = false;
 
-  public form = this.fb.group({
+  public registerForm = this.fb.group({
     email: [
       '',
       [
@@ -49,13 +49,13 @@ export class RegisterComponent {
   }
 
   public submit(): void {
-    const registerRequest = this.form.value as RegisterRequest;
+    const registerRequest = this.registerForm.value as RegisterRequest;
     this.authService.register(registerRequest).subscribe(
       (response: AuthSuccess) => {
         localStorage.setItem('token', response.token);
         this.authService.me().subscribe((user: User) => {
           this.sessionService.logIn(user);
-          this.router.navigate(['/topics'])
+          this.router.navigate(['/posts'])
         });
       },
       error => this.onError = true

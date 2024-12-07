@@ -16,7 +16,7 @@ export class LoginComponent {
   
   public onError = false;
 
-  public form = this.fb.group({
+  public loginForm = this.fb.group({
     username: [
       '',
       [
@@ -40,15 +40,15 @@ export class LoginComponent {
   }
 
   public submit(): void {
-    const loginRequest = this.form.value as LoginRequest;
+    const loginRequest = this.loginForm.value as LoginRequest;
     this.authService.login(loginRequest).subscribe(
       (response: AuthSuccess) => {
         localStorage.setItem('token', response.token);
         this.authService.me().subscribe((user: User) => {
           this.sessionService.logIn(user);
-          this.router.navigate(['/topics'])
+          this.router.navigate(['/posts'])
         });
-        this.router.navigate(['/topics'])
+        this.router.navigate(['/posts'])
       },
       error => this.onError = true
     );

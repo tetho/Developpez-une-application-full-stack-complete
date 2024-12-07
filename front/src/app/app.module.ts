@@ -3,16 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
-import { PostListComponent } from './features/posts/components/post-list/post-list.component';
-import { PostDetailComponent } from './features/posts/components/post-detail/post-detail.component';
-import { PostFormComponent } from './features/posts/components/post-form/post-form.component';
-import { CommentFormComponent } from './features/comments/components/comment-form/comment-form.component';
-import { CommentListComponent } from './features/comments/components/comment-list/comment-list.component';
-import { CommentDetailComponent } from './features/comments/components/comment-detail/comment-detail.component';
-import { TopicListComponent } from './features/topics/components/topic-list/topic-list.component';
-import { TopicDetailComponent } from './features/topics/components/topic-detail/topic-detail.component';
-import { TopicFormComponent } from './features/topics/components/topic-form/topic-form.component';
-import { HeaderComponent } from './shared/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthRoutingModule } from './features/auth/auth-routing.module';
 import { AuthModule } from './features/auth/auth.module';
@@ -33,11 +23,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     NotFoundComponent,
     MeComponent,
     HomeComponent
@@ -53,6 +47,8 @@ import { MatSelectModule } from '@angular/material/select';
     PostsRoutingModule,
     TopicsRoutingModule,
     TopicsModule,
+    ReactiveFormsModule,
+    FormsModule,
     FlexLayoutModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -62,6 +58,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatToolbarModule,
     MatSelectModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

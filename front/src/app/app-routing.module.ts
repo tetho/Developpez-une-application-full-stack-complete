@@ -5,17 +5,30 @@ import { AuthGuard } from './guards/auth.guard';
 import { MeComponent } from './features/me/me.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { HomeComponent } from './features/home/home.component';
+import { LoginComponent } from './features/auth/components/login/login.component';
+import { RegisterComponent } from './features/auth/components/register/register.component';
 
 const routes: Routes = [
   {
     path: '',
     //canActivate: [UnauthGuard],
-    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+    //loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
+    component: HomeComponent
   },
   {
     path: 'home',
     //canActivate: [UnauthGuard],
     component: HomeComponent
+  },
+  {
+    path: 'login',
+    //canActivate: [UnauthGuard],
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    //canActivate: [UnauthGuard],
+    component: RegisterComponent
   },
   {
     path: 'me',

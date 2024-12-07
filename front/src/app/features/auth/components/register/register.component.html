@@ -1,24 +1,31 @@
 <div class="register" fxLayout="row" fxLayoutAlign="center center">
     <mat-card>
-        <mat-card-header fxLayoutAlign="center center">
-            <mat-card-title>Inscription</mat-card-title>
-        </mat-card-header>
-        <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
+        <mat-card-title>
+            <div class="header">
+                <button mat-icon-button routerLink="/" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <h1>Inscription</h1>
+            </div>
+        </mat-card-title>
+        <form class="register-form" [formGroup]="registerForm" (ngSubmit)="submit()">
             <mat-card-content fxLayout="column">
-                <mat-form-field fxFlex>
-                    <label>Nom d'utilisateur</label>
+                <span>Nom d'utilisateur</span>
+                <mat-form-field appearance="outline" class="custom-field" fxFlex>
                     <input matInput formControlName="username">
                 </mat-form-field>
-                <mat-form-field fxFlex>
-                    <label>E-mail</label>
+                <span>E-mail</span>
+                <mat-form-field appearance="outline" class="custom-field" fxFlex>
                     <input matInput formControlName="email">
                 </mat-form-field>
-                <mat-form-field fxFlex>
-                    <label>Mot de passe</label>
+                <span>Mot de passe</span>
+                <mat-form-field appearance="outline" class="custom-field" fxFlex>
                     <input matInput type="password" formControlName="password">
                 </mat-form-field>
             </mat-card-content>
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Inscription</button>
+            <div fxLayout="row" fxLayoutAlign="center center" class="form-button">
+                <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Inscription</button>
+            </div>
             <span *ngIf="onError" class="error ml2">An error occurred</span>
         </form>
     </mat-card>

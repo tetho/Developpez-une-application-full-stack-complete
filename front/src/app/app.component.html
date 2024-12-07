@@ -1,17 +1,17 @@
 <div class="app">
-    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
-        <span>MddClient</span>
+    <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="logo-header">
+            <span routerLink=""><img src="assets/logo.png" alt="MDD Logo" class="logo" /></span>
+        </div>
         <div *ngIf="$isLogged() | async; else notLogged">
-            <span routerLink="posts" class="link">Articles</span>
-            <span routerLink="topics" class="link">Sujets</span>
-            <span routerLink="me" class="link">Profil</span>
+            <span routerLink="posts" routerLinkActive="active-link" class="link">Articles</span>
+            <span routerLink="topics" routerLinkActive="active-link" class="link">Thèmes</span>
+            <span routerLink="me" routerLinkActive="active-link" class="link">Profil</span>
             <span (click)="logout()" class="link">Se déconnecter</span>
         </div>
         <ng-template #notLogged>
-            <div>
-                <span routerLink="login" class="link">Se connecter</span>
-                <span routerLink="register" class="link">S'inscrire</span>
-            </div>
+            <span routerLink="posts" routerLinkActive="active-link" class="link">Articles</span>
+            <span routerLink="topics" routerLinkActive="active-link" class="link">Thèmes</span>
         </ng-template>
     </mat-toolbar>
     <div>
