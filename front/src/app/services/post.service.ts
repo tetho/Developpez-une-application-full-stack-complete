@@ -21,7 +21,7 @@ export class PostService {
    */
   getAll(): Observable<Post[]> {
     return this.http.get<Post[]>(this.apiUrl).pipe(
-      map((posts: any[]) => // Typage explicite des données brutes de l'API
+      map((posts: any[]) =>
         posts.map(post => ({
           ...post,
           user_id: { id: post.user_id, username: '', email: '', password: '', role: '' } as User
@@ -37,6 +37,21 @@ export class PostService {
    */
   getById(id: string): Observable<Post> {
     return this.http.get<Post>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * Get posts for subscribed topics
+   * @returns 
+   */
+  getPostsForSubscribedTopics(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/subscribed`).pipe(
+      map((posts: any[]) =>
+        posts.map(post => ({
+          ...post,
+          user_id: { id: post.user_id, username: '', email: '', password: '', role: '' } as User
+        }))
+      )
+    );
   }
 
   /**

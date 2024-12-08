@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class PostListComponent implements OnInit {
 
-  public posts$ = this.postService.getAll();
+  public posts$ = this.postService.getPostsForSubscribedTopics();
   public authors: { [key: string]: User } = {};
 
   constructor(
