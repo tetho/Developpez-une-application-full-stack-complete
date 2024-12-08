@@ -3,6 +3,8 @@ package com.openclassrooms.mddapi.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
+
 import com.openclassrooms.mddapi.dto.TopicDTO;
 import com.openclassrooms.mddapi.dto.UserDTO;
 
@@ -24,9 +26,9 @@ public interface IUserService {
 	
 	public void deleteUser(Long id);
 	
-	public List<TopicDTO> getSubscribedTopics(Long userId);
+	public List<TopicDTO> getSubscribedTopics(Authentication authentication);
 	
-	public void subscribeToTopic(Long userId, Long topicId);
+	public void subscribeToTopic(Long topicId, Authentication authentication);
 	
-	public void unsubscribeFromTopic(Long userId, Long topicId);
+	public void unsubscribeFromTopic(Long topicId, Authentication authentication);
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.TopicDTO;
@@ -89,9 +90,11 @@ public class UserService implements IUserService {
     }
     
     @Override
-    public List<TopicDTO> getSubscribedTopics(Long userId) {
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+    public List<TopicDTO> getSubscribedTopics(Authentication authentication) {
+    	String emailOrUsername = authentication.getName();
+        User user = userRepository.findByEmail(emailOrUsername)
+                .or(() -> userRepository.findByUsername(emailOrUsername))
+                .orElseThrow(() -> new RuntimeException("User not found"));
         return user.getTopics()
                    .stream()
                    .map(topicMapper::toDTO)
@@ -99,9 +102,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void subscribeToTopic(Long userId, Long topicId) {
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+    public void subscribeToTopic(Long topicId, Authentication authentication) {
+    	String emailOrUsername = authentication.getName();
+        User user = userRepository.findByEmail(emailOrUsername)
+                .or(() -> userRepository.findByUsername(emailOrUsername))
+                .orElseThrow(() -> new RuntimeException("User not found"));
         Topic topic = topicRepository.findById(topicId)
             .orElseThrow(() -> new RuntimeException("Topic not found"));
 
@@ -112,9 +117,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void unsubscribeFromTopic(Long userId, Long topicId) {
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+    public void unsubscribeFromTopic(Long topicId, Authentication authentication) {
+    	String emailOrUsername = authentication.getName();
+        User user = userRepository.findByEmail(emailOrUsername)
+                .or(() -> userRepository.findByUsername(emailOrUsername))
+                .orElseThrow(() -> new RuntimeException("User not found"));
         Topic topic = topicRepository.findById(topicId)
             .orElseThrow(() -> new RuntimeException("Topic not found"));
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,20 +32,20 @@ public class UserController {
 		return this.userService.getUserById(id);
 	}
 	
-    @GetMapping("/{id}/topics")
-    public List<TopicDTO> getSubscribedTopics(@PathVariable Long id) {
-        return this.userService.getSubscribedTopics(id);
+    @GetMapping("/topics")
+    public List<TopicDTO> getSubscribedTopics(Authentication authentication) {
+        return this.userService.getSubscribedTopics(authentication);
     }
 
-    @PostMapping("/{userId}/topics/{topicId}/subscribe")
-    public ResponseEntity<Void> subscribeToTopic(@PathVariable Long userId, @PathVariable Long topicId) {
-        this.userService.subscribeToTopic(userId, topicId);
+    @PostMapping("/{id}/topics/{topicId}/subscribe")
+    public ResponseEntity<Void> subscribeToTopic(@PathVariable Long topicId, Authentication authentication) {
+        this.userService.subscribeToTopic(topicId, authentication);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{userId}/topics/{topicId}/unsubscribe")
-    public ResponseEntity<Void> unsubscribeFromTopic(@PathVariable Long userId, @PathVariable Long topicId) {
-        this.userService.unsubscribeFromTopic(userId, topicId);
+    @DeleteMapping("/{id}/topics/{topicId}/unsubscribe")
+    public ResponseEntity<Void> unsubscribeFromTopic(@PathVariable Long topicId, Authentication authentication) {
+        this.userService.unsubscribeFromTopic(topicId, authentication);
         return ResponseEntity.ok().build();
     }
 }
