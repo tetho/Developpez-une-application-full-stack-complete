@@ -11,4 +11,6 @@ import com.openclassrooms.mddapi.model.Post;
 public interface PostRepository extends JpaRepository<Post, Long>{
 
 	List<Post> findByTopicId(Long topicId);
+	
+	List<Post> findByTopicIdIn(List<Long> topicIds);
 }

@@ -45,6 +45,11 @@ public class PostController {
         return postService.getPostsByTopicId(topicId);
     }
 
+    @GetMapping("/subscribed")
+    public List<PostDTO> getPostsForSubscribedTopics(Authentication authentication) {
+        return postService.getPostsForSubscribedTopics(authentication);
+    }
+    
     @PostMapping()
     public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO, Authentication authentication) {
         PostDTO createdPost = postService.createPost(postDTO, authentication);

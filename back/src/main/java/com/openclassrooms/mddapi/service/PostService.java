@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.PostDTO;
+import com.openclassrooms.mddapi.dto.TopicDTO;
 import com.openclassrooms.mddapi.mapper.PostMapper;
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.Topic;
@@ -27,6 +28,9 @@ public class PostService implements IPostService {
     @Autowired
     private TopicRepository topicRepository;
 
+    @Autowired
+    private UserService userService;
+    
     private final PostMapper postMapper = PostMapper.INSTANCE;
 
     @Override
@@ -48,6 +52,18 @@ public class PostService implements IPostService {
         return posts.stream().map(postMapper::toDTO).collect(Collectors.toList());
     }
 
+    @Override
+    public List<PostDTO> getPostsForSubscribedTopics(Authentication authentication) {
+        List<TopicDTO> subscribedTopics = userService.getSubscribedTopics(authentication);
+        List<Long> subscribedTopicIds = subscribedTopics.stream()
+                .map(TopicDTO::getId)
+                .collect(Collectors.toList());
+        List<Post> posts = postRepository.findByTopicIdIn(subscribedTopicIds);
+        return posts.stream()
+                    .map(postMapper::toDTO)
+                    .collect(Collectors.toList());
+    }
+    
     @Override
     public PostDTO createPost(PostDTO postDTO, Authentication authentication) {
         Post post = postMapper.toEntity(postDTO);
