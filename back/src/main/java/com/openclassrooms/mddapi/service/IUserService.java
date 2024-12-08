@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.openclassrooms.mddapi.dto.TopicDTO;
 import com.openclassrooms.mddapi.dto.UserDTO;
 
 public interface IUserService {
@@ -22,4 +23,10 @@ public interface IUserService {
 	public UserDTO updateUser(Long id, UserDTO userDTO);
 	
 	public void deleteUser(Long id);
+	
+	public List<TopicDTO> getSubscribedTopics(Long userId);
+	
+	public void subscribeToTopic(Long userId, Long topicId);
+	
+	public void unsubscribeFromTopic(Long userId, Long topicId);
 }

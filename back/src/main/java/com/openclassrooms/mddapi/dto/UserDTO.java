@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,6 +19,8 @@ public class UserDTO {
     
 	private String password;
     
+	private List<TopicDTO> topics;
+	
     @JsonProperty("created_at")
 	private LocalDateTime createdAt;
 	

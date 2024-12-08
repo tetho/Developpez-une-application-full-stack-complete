@@ -7,9 +7,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mddapi.dto.TopicDTO;
 import com.openclassrooms.mddapi.dto.UserDTO;
+import com.openclassrooms.mddapi.mapper.TopicMapper;
 import com.openclassrooms.mddapi.mapper.UserMapper;
+import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
 @Service
@@ -18,7 +22,12 @@ public class UserService implements IUserService {
 	@Autowired
     private UserRepository userRepository;
 
+	@Autowired
+    private TopicRepository topicRepository;
+	
     private final UserMapper userMapper = UserMapper.INSTANCE;
+    
+    private final TopicMapper topicMapper = TopicMapper.INSTANCE;
 
     @Override
     public Optional<UserDTO> findByEmail(String email) {
@@ -77,5 +86,41 @@ public class UserService implements IUserService {
     public void deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         userRepository.delete(user);
+    }
+    
+    @Override
+    public List<TopicDTO> getSubscribedTopics(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getTopics()
+                   .stream()
+                   .map(topicMapper::toDTO)
+                   .collect(Collectors.toList());
+    }
+
+    @Override
+    public void subscribeToTopic(Long userId, Long topicId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        Topic topic = topicRepository.findById(topicId)
+            .orElseThrow(() -> new RuntimeException("Topic not found"));
+
+        if (!user.getTopics().contains(topic)) {
+            user.getTopics().add(topic);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void unsubscribeFromTopic(Long userId, Long topicId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        Topic topic = topicRepository.findById(topicId)
+            .orElseThrow(() -> new RuntimeException("Topic not found"));
+
+        if (user.getTopics().contains(topic)) {
+            user.getTopics().remove(topic);
+            userRepository.save(user);
+        }
     }
 }
