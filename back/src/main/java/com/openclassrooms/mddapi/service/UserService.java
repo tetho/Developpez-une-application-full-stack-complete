@@ -74,12 +74,14 @@ public class UserService implements IUserService {
     }
     
     @Override
-    public UserDTO updateUser(Long id, UserDTO userDTO) {
-        User existingUser = userRepository.findById(id)
+    public UserDTO updateUser(Authentication authentication, UserDTO userDTO) {
+    	String emailOrUsername = authentication.getName();
+        User user = userRepository.findByEmail(emailOrUsername)
+                .or(() -> userRepository.findByUsername(emailOrUsername))
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        existingUser.setUsername(userDTO.getUsername());
-        existingUser.setEmail(userDTO.getEmail());
-        User updatedUser = userRepository.save(existingUser);
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        User updatedUser = userRepository.save(user);
         return userMapper.toDTO(updatedUser);
     }
     
@@ -109,7 +111,6 @@ public class UserService implements IUserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Topic topic = topicRepository.findById(topicId)
             .orElseThrow(() -> new RuntimeException("Topic not found"));
-
         if (!user.getTopics().contains(topic)) {
             user.getTopics().add(topic);
             userRepository.save(user);
@@ -124,7 +125,6 @@ public class UserService implements IUserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Topic topic = topicRepository.findById(topicId)
             .orElseThrow(() -> new RuntimeException("Topic not found"));
-
         if (user.getTopics().contains(topic)) {
             user.getTopics().remove(topic);
             userRepository.save(user);

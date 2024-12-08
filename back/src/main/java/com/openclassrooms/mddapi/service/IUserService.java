@@ -22,7 +22,7 @@ public interface IUserService {
 	
 	public UserDTO createUser(UserDTO userDTO);
 	
-	public UserDTO updateUser(Long id, UserDTO userDTO);
+	public UserDTO updateUser(Authentication authentication, UserDTO userDTO);
 	
 	public void deleteUser(Long id);
 	
