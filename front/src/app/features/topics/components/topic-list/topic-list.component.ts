@@ -32,7 +32,6 @@ export class TopicListComponent implements OnInit {
   subscribe(topicId: string): void {
     if (this.user) {
       this.userService.subscribeToTopic(topicId).subscribe(() => {
-        //this.subscribedTopics = this.subscribedTopics.filter(topic => String(topic.topic_id) !== topicId);
         this.topicService.getById(topicId).subscribe(topic => {
           this.subscribedTopics.push(topic);
         });
@@ -50,7 +49,7 @@ export class TopicListComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.user) {
-      this.userService.getSubscribedTopics(String(this.user.id)).subscribe(topics => {
+      this.userService.getSubscribedTopics().subscribe(topics => {
         this.subscribedTopics = topics;
       });
     }

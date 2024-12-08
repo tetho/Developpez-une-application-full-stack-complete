@@ -42,12 +42,11 @@ export class UserService {
 
   /**
    * Update user
-   * @param id 
    * @param user 
    * @returns 
    */
-  update(id: string, user: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/${id}`, user);
+  update(user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}`, user);
   }
 
   /**
@@ -61,10 +60,9 @@ export class UserService {
 
   /**
    * Get subscribed
-   * @param userId 
    * @returns 
    */
-  getSubscribedTopics(userId: string): Observable<Topic[]> {
+  getSubscribedTopics(): Observable<Topic[]> {
     return this.http.get<Topic[]>(`${this.apiUrl}/topics`);
   }
 

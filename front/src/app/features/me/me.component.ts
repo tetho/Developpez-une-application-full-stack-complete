@@ -7,6 +7,8 @@ import { SessionService } from 'src/app/services/session.service';
 import { AuthSuccess } from '../auth/interfaces/auth-success.interface';
 import { MeRequest } from './interfaces/me-request.interface';
 import { Observable } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-me',
@@ -37,10 +39,13 @@ export class MeComponent implements OnInit {
     ],
   });
 
-  constructor(private authService: AuthService,
-              private fb: FormBuilder,
-              private router: Router,
-              private sessionService: SessionService) {
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private fb: FormBuilder,
+    private router: Router,
+    private sessionService: SessionService,
+    private matSnackBar: MatSnackBar) {
   }
 
   public ngOnInit(): void {
@@ -60,17 +65,15 @@ export class MeComponent implements OnInit {
   }
 
   public submit(): void {
-    const meRequest = this.meForm.value as MeRequest;
-    /*this.authService.register(meRequest).subscribe(
-      (response: AuthSuccess) => {
-        localStorage.setItem('token', response.token);
-        this.authService.me().subscribe((user: User) => {
-          this.sessionService.logIn(user);
-          this.router.navigate(['/topics'])
-        });
-      },
-      error => this.onError = true
-    );*/
+    const user = this.meForm?.value as User;
+    this.userService
+        .update(user)
+        .subscribe({
+          next: (_: User) => {
+              this.exitPage('Profil utilisateur mis à jour');
+          },
+          error: (err) => console.error('Erreur lors de la mise à jour', err),
+      });
   }
 
   public $isLogged(): Observable<boolean> {
@@ -80,5 +83,10 @@ export class MeComponent implements OnInit {
   public logout(): void {
     this.sessionService.logOut();
     this.router.navigate([''])
+  }
+
+  private exitPage(message: string): void {
+    this.matSnackBar.open(message, 'Close', { duration: 3000 });
+    this.router.navigate(['me']);
   }
 }
