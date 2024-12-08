@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Topic } from 'src/app/interfaces/topic.interface';
 import { User } from 'src/app/interfaces/user.interface';
 import { SessionService } from 'src/app/services/session.service';
@@ -14,11 +15,13 @@ export class TopicListComponent implements OnInit {
   
   public topics$ = this.topicService.getAll();
   public subscribedTopics: Topic[] = [];
+  public showCreateButton: boolean = false;
 
   constructor(
     private sessionService: SessionService,
     private topicService: TopicService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { }
 
   get user(): User | undefined {
@@ -53,5 +56,6 @@ export class TopicListComponent implements OnInit {
         this.subscribedTopics = topics;
       });
     }
+    this.showCreateButton = this.router.url === '/topics';
   }
 }

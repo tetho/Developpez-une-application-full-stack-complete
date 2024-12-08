@@ -29,13 +29,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { TopicListComponent } from './features/topics/components/topic-list/topic-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
     MeComponent,
-    HomeComponent
+    HomeComponent,
+    TopicListComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     PostsRoutingModule,
     TopicsRoutingModule,
     TopicsModule,
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
@@ -62,6 +65,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatButtonModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

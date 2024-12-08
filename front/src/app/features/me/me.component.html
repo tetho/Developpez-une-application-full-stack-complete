@@ -1,4 +1,4 @@
-<div class="me" fxLayout="row" fxLayoutAlign="center center">
+<div class="me">
     <mat-card>
         <mat-card-title>
             <div class="header">
@@ -22,6 +22,16 @@
                 <p *ngIf="onError" class="error">Une erreur s'est produite</p>
             </form>
         </mat-card-content>
-        <hr />
     </mat-card>
+</div>
+<hr />
+<div class="list">
+    <mat-card>
+        <mat-card-title>
+            <div class="header">
+                <h1>Abonnements</h1>
+            </div>
+        </mat-card-title>
+    </mat-card>
+    <app-topic-list></app-topic-list>
 </div>

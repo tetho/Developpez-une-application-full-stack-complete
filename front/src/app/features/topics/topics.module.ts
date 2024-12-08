@@ -23,7 +23,7 @@ const materialModules = [
 
 @NgModule({
   declarations: [
-    TopicListComponent,
+    //TopicListComponent,
     TopicFormComponent,
     TopicDetailComponent
   ],

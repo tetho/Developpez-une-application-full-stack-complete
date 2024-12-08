@@ -29,8 +29,7 @@ p {
 
 hr {
     border: 1px thin #000000;
-    margin-left: 16px;
-    margin-right: 48px;
+    width: 96%;
 }
 
 .items {
@@ -109,13 +108,6 @@ mat-form-field.custom-field {
     &.mat-form-field-invalid .mat-form-field-outline {
         stroke: red !important;
     }
-}
-
-.create, .login, .register, .me {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 24px;
 }
 
 .form-container {
@@ -222,7 +214,11 @@ mat-form-field.custom-field {
 }
 
 .create, .login, .register, .me {
-    width: 100%;
+    width: 97%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 24px;
 
     mat-card {
         padding: 0px;
@@ -269,6 +265,9 @@ mat-form-field.custom-field {
         }
     }
 
+    h1 {
+        padding-right: 48px;
+    }
 }
 
 :root {
