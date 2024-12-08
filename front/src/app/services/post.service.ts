@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Post } from '../interfaces/post.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { PostResponse } from '../interfaces/api/post-response';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,14 @@ export class PostService {
    * @returns 
    */
   getAll(): Observable<Post[]> {
-    return this.http.get<Post[]>(this.apiUrl);
+    return this.http.get<Post[]>(this.apiUrl).pipe(
+      map((posts: any[]) => // Typage explicite des données brutes de l'API
+        posts.map(post => ({
+          ...post,
+          user_id: { id: post.user_id, username: '', email: '', password: '', role: '' } as User
+        }))
+      )
+    );
   }
 
   /**
