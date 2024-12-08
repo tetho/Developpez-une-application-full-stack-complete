@@ -16,8 +16,11 @@
                     <p>{{ topic.description }}</p>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-raised-button color="primary" [routerLink]="['detail',topic.topic_id]">
+                    <button *ngIf="!isSubscribed(topic)" mat-raised-button color="primary" [routerLink]="['/topics']" (click)="subscribe(topic.topic_id.toString())">
                         <span>S'abonner</span>
+                    </button>
+                    <button *ngIf="isSubscribed(topic)" mat-raised-button color="primary" [routerLink]="['/topics']" (click)="unsubscribe(topic.topic_id.toString())">
+                        <span>Se Désabonner</span>
                     </button>
                 </mat-card-actions>
             </mat-card>

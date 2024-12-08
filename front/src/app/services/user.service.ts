@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Topic } from '../interfaces/topic.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +57,34 @@ export class UserService {
    */
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * Get subscribed
+   * @param userId 
+   * @returns 
+   */
+  getSubscribedTopics(userId: string): Observable<Topic[]> {
+    return this.http.get<Topic[]>(`${this.apiUrl}/topics`);
+  }
+
+  /**
+   * Subscribe to topic
+   * @param userId 
+   * @param topicId 
+   * @returns 
+   */
+  subscribeToTopic(topicId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/me/topics/${topicId}/subscribe`, {});
+  }
+
+  /**
+   * Unsubscribe from topic
+   * @param userId 
+   * @param topicId 
+   * @returns 
+   */
+  unsubscribeFromTopic(topicId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/me/topics/${topicId}/unsubscribe`);
   }
 }
