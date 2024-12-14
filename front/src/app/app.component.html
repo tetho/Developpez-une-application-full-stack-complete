@@ -1,17 +1,34 @@
 <div class="app">
     <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="logo-header">
-            <span routerLink=""><img src="assets/logo.png" alt="MDD Logo" class="logo" /></span>
-        </div>
-        <div *ngIf="$isLogged() | async; else notLogged">
-            <span routerLink="posts" routerLinkActive="active-link" class="link">Articles</span>
-            <span routerLink="topics" routerLinkActive="active-link" class="link">Thèmes</span>
-            <span routerLink="me" routerLinkActive="active-link" class="link">Profil</span>
-        </div>
-        <ng-template #notLogged>
-        </ng-template>
+      <div class="logo-header">
+        <span routerLink=""><img src="assets/logo.png" alt="Logo" class="logo" /></span>
+      </div>
+      <button mat-icon-button (click)="toggleSidenav()" class="mobile-menu-button" *ngIf="$isLogged() | async">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="menu-links" *ngIf="$isLogged() | async">
+        <span routerLink="posts" routerLinkActive="active-link" class="link">Articles</span>
+        <span routerLink="topics" routerLinkActive="active-link" class="link">Thèmes</span>
+        <span routerLink="me" routerLinkActive="active-link" class="link">
+            <div class="profile-container">
+                <img src="assets/profile-picture.png" alt="Profil utilisateur" class="profile-image" routerLink="me" />
+            </div>
+        </span>
+      </div>
     </mat-toolbar>
-    <div>
-        <router-outlet></router-outlet>
-    </div>
-</div>
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #sidenav class="sidenav" mode="over" position="end" [opened]="false" (closedStart)="onSidenavClose()" *ngIf="$isLogged() | async">
+        <div>
+          <a routerLink="posts" (click)="toggleSidenav()">Articles</a>
+          <a routerLink="topics" (click)="toggleSidenav()">Thèmes</a>
+        </div>
+        <div class="profile-container">
+            <a routerLink="me" (click)="toggleSidenav()">
+                <img src="assets/profile-picture.png" alt="Profil utilisateur" class="profile-image" routerLink="me" />
+            </a>
+        </div>
+      </mat-sidenav>
+      <router-outlet></router-outlet>
+    </mat-sidenav-container>
+  </div>
+  

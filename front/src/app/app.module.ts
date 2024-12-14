@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { TopicListComponent } from './features/topics/components/topic-list/topic-list.component';
 
@@ -66,6 +67,7 @@ import { TopicListComponent } from './features/topics/components/topic-list/topi
     MatInputModule,
     MatSnackBarModule,
     MatButtonModule,
+    MatSidenavModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
