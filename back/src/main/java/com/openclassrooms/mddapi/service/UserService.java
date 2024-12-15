@@ -68,7 +68,9 @@ public class UserService implements IUserService {
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
-
+        if (!isPasswordValid(userDTO.getPassword())) {
+            throw new RuntimeException("Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.");
+        }
         User savedUser = userRepository.save(user);
         return userMapper.toDTO(savedUser);
     }
@@ -89,6 +91,11 @@ public class UserService implements IUserService {
     public void deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         userRepository.delete(user);
+    }
+    
+    private boolean isPasswordValid(String password) {
+        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        return password.matches(regex);
     }
     
     @Override
