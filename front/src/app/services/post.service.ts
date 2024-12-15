@@ -43,8 +43,8 @@ export class PostService {
    * Get posts for subscribed topics
    * @returns 
    */
-  getPostsForSubscribedTopics(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.apiUrl}/subscribed`).pipe(
+  getPostsForSubscribedTopics(sortOrder: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/subscribed?sortOrder=${sortOrder}`).pipe(
       map((posts: any[]) =>
         posts.map(post => ({
           ...post,

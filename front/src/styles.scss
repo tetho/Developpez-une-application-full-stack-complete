@@ -65,6 +65,24 @@ button[mat-raised-button] {
     margin-bottom: 16px !important;
 }
 
+button[mat-icon-button] {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.sort-button {
+    margin-right: 40px !important;
+    font-weight: 600;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 mat-card {
     border: none !important;
     box-shadow: none !important;
@@ -143,6 +161,30 @@ mat-form-field.custom-field {
         .info-row {
             flex-direction: column;
             gap: 8px;
+        }
+
+        .header-buttons {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .header-buttons button {
+            margin-right: 0;
+            margin-bottom: 16px;
+            width: 100%;
+            text-align: center;
+        }
+    
+        button[mat-raised-button] {
+            min-width: 150px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            background-color: var(--primary-color) !important;
+            color: white;
+            text-align: center;
+            width: 150px;
         }
     }
 }

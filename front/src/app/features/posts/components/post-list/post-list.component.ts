@@ -11,8 +11,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class PostListComponent implements OnInit {
 
-  public posts$ = this.postService.getPostsForSubscribedTopics();
+  public posts$ = this.postService.getPostsForSubscribedTopics('desc');
   public authors: { [key: string]: User } = {};
+  public sortDescending: boolean = true;
 
   constructor(
     private sessionService: SessionService,
@@ -21,6 +22,12 @@ export class PostListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadPosts();
+  }
+
+  loadPosts(): void {
+    this.posts$ = this.postService.getPostsForSubscribedTopics(this.sortDescending ? 'desc' : 'asc');
+
     this.posts$.subscribe(posts => {
       posts.forEach(post => {
         if (post.user_id?.id) {
@@ -40,5 +47,10 @@ export class PostListComponent implements OnInit {
         console.error("Erreur lors du chargement de l'auteur:", error);
       });
     }
+  }
+
+  changeSortOrder(): void {
+    this.sortDescending = !this.sortDescending;  // Inverse l'ordre du tri
+    this.loadPosts();  // Recharge les posts avec le nouvel ordre
   }
 }

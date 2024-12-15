@@ -1,9 +1,15 @@
 <div class="list">
     <mat-card>
-        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
-            <button mat-raised-button color="primary" routerLink="create" class="create-button">
-                <span class="ml1">Créer un article</span>
-            </button>             
+        <mat-card-header fxLayout="row">
+            <div class="header-buttons">
+                <button mat-raised-button color="primary" routerLink="create" class="create-button">
+                    Créer un article
+                </button>
+                <button mat-icon-button (click)="changeSortOrder()" fxFlex="auto" class="sort-button">
+                    Trier par
+                    <mat-icon>{{ sortDescending ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+                </button>
+            </div>
         </mat-card-header>
         <div class="items" fxLayout="row" fxLayout.lt-md="column">
             <mat-card class="item" *ngFor="let post of (posts$ | async)" fxFlex>
