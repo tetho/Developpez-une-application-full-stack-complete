@@ -21,6 +21,9 @@
                 <span>Mot de passe</span>
                 <mat-form-field appearance="outline" class="custom-field" fxFlex>
                     <input matInput type="password" formControlName="password">
+                    <mat-error *ngIf="registerForm.get('password')?.hasError('pattern')">
+                        Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.
+                    </mat-error>
                 </mat-form-field>
             </mat-card-content>
             <div fxLayout="row" fxLayoutAlign="center center" class="form-button">
