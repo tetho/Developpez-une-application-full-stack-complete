@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.PostDTO;
@@ -46,8 +47,8 @@ public class PostController {
     }
 
     @GetMapping("/subscribed")
-    public List<PostDTO> getPostsForSubscribedTopics(Authentication authentication) {
-        return postService.getPostsForSubscribedTopics(authentication);
+    public List<PostDTO> getPostsForSubscribedTopics(Authentication authentication, @RequestParam(defaultValue = "desc") String sortOrder) {
+        return postService.getPostsForSubscribedTopics(authentication, sortOrder);
     }
     
     @PostMapping()

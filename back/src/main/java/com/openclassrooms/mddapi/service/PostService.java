@@ -53,12 +53,17 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<PostDTO> getPostsForSubscribedTopics(Authentication authentication) {
+    public List<PostDTO> getPostsForSubscribedTopics(Authentication authentication, String sortOrder) {
         List<TopicDTO> subscribedTopics = userService.getSubscribedTopics(authentication);
         List<Long> subscribedTopicIds = subscribedTopics.stream()
                 .map(TopicDTO::getId)
                 .collect(Collectors.toList());
         List<Post> posts = postRepository.findByTopicIdIn(subscribedTopicIds);
+        if ("desc".equalsIgnoreCase(sortOrder)) {
+            posts.sort((p1, p2) -> p2.getUpdatedAt().compareTo(p1.getUpdatedAt()));
+        } else {
+            posts.sort((p1, p2) -> p1.getUpdatedAt().compareTo(p2.getUpdatedAt()));
+        }
         return posts.stream()
                     .map(postMapper::toDTO)
                     .collect(Collectors.toList());

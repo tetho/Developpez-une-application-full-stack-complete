@@ -14,7 +14,7 @@ public interface IPostService {
 	
 	public List<PostDTO> getPostsByTopicId(Long topicId);
 	
-	public List<PostDTO> getPostsForSubscribedTopics(Authentication authentication);
+	public List<PostDTO> getPostsForSubscribedTopics(Authentication authentication, String sortOrder);
 	
 	public PostDTO createPost(PostDTO postDTO, Authentication authentication);
 	
