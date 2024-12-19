@@ -88,6 +88,21 @@ public class UserService implements IUserService {
     }
     
     @Override
+    public UserDTO updateUser(String emailOrUsername, UserDTO userDTO) {
+    	User user = userRepository.findByEmail(emailOrUsername)
+                .or(() -> userRepository.findByUsername(emailOrUsername))
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (userDTO.getEmail() != null && !userDTO.getEmail().equals(user.getEmail())) {
+            user.setEmail(userDTO.getEmail());
+        }
+        if (userDTO.getUsername() != null && !userDTO.getUsername().equals(user.getUsername())) {
+            user.setUsername(userDTO.getUsername());
+        }
+        User updatedUser = userRepository.save(user);
+        return userMapper.toDTO(updatedUser);
+    }
+    
+    @Override
     public void deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         userRepository.delete(user);

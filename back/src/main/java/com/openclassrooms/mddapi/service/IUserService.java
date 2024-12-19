@@ -24,6 +24,8 @@ public interface IUserService {
 	
 	public UserDTO updateUser(Authentication authentication, UserDTO userDTO);
 	
+	public UserDTO updateUser(String emailOrUsername, UserDTO userDTO);
+	
 	public void deleteUser(Long id);
 	
 	public List<TopicDTO> getSubscribedTopics(Authentication authentication);

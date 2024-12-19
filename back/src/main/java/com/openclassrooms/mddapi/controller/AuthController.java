@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,4 +81,20 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
+	
+	@PutMapping("/update")
+	public ResponseEntity<?> updateUser(Authentication authentication, @RequestBody UserDTO userDTO) {
+	    String emailOrUsername = authentication.getName();
+	    UserDTO updatedUser = userService.updateUser(emailOrUsername, userDTO);
+	    JwtDTO jwtDTO = new JwtDTO();
+	    boolean isSensitiveDataChanged = !emailOrUsername.equals(updatedUser.getEmail()) 
+	                                      && !emailOrUsername.equals(updatedUser.getUsername());
+	    if (isSensitiveDataChanged) {
+	        Authentication newAuth = new UsernamePasswordAuthenticationToken(updatedUser.getEmail(), null);
+	        String newToken = jwtService.generateToken(newAuth);
+	        jwtDTO.setToken(newToken);
+	    }
+	    jwtDTO.setUser(updatedUser);
+	    return ResponseEntity.ok(jwtDTO);
+	}
 }
