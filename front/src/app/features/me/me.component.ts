@@ -65,15 +65,16 @@ export class MeComponent implements OnInit {
   }
 
   public submit(): void {
-    const user = this.meForm?.value as User;
-    this.userService
-        .update(user)
-        .subscribe({
-          next: (_: User) => {
-              this.exitPage('Profil utilisateur mis à jour');
-          },
-          error: (err) => console.error('Erreur lors de la mise à jour', err),
-      });
+    const updatedUser = this.meForm.value as Partial<User>;
+    this.authService.updateUser(updatedUser).subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        this.matSnackBar.open('Profil mis à jour avec succès.', 'Fermer', { duration: 3000 });
+      },
+      error: () => {
+        this.matSnackBar.open('Erreur lors de la mise à jour du profil.', 'Fermer', { duration: 3000 });
+      },
+    });
   }
 
   public $isLogged(): Observable<boolean> {

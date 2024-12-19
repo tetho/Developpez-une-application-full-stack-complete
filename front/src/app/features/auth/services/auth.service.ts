@@ -27,4 +27,8 @@ export class AuthService {
   public me(): Observable<User> {
     return this.httpClient.get<User>(`${this.apiUrl}/me`);
   }
+
+  public updateUser(user: Partial<User>): Observable<{ token: string }> {
+    return this.httpClient.put<{ token: string }>(`${this.apiUrl}/update`, user);
+  }
 }
