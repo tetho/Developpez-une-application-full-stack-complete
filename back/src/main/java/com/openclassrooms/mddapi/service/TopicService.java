@@ -13,26 +13,33 @@ import com.openclassrooms.mddapi.repository.TopicRepository;
 @Service
 public class TopicService implements ITopicService {
 
-	@Autowired
+    @Autowired
     private TopicRepository topicRepository;
 
     private final TopicMapper topicMapper = TopicMapper.INSTANCE;
 
     @Override
     public TopicDTO getTopicById(Long id) {
-        Topic topic = topicRepository.findById(id).orElseThrow(() -> new RuntimeException("Topic not found"));
+        Topic topic = topicRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Topic with ID " + id + " not found"));
         return topicMapper.toDTO(topic);
     }
 
     @Override
     public List<TopicDTO> getTopics() {
         List<Topic> topics = topicRepository.findAll();
+        if (topics.isEmpty()) {
+            throw new RuntimeException("No topics found");
+        }
         return topics.stream().map(topicMapper::toDTO)
                      .collect(Collectors.toList());
     }
 
     @Override
     public TopicDTO createTopic(TopicDTO topicDTO) {
+        if (topicDTO.getName() == null || topicDTO.getName().isEmpty()) {
+            throw new RuntimeException("Topic name cannot be empty");
+        }
         Topic topic = topicMapper.toEntity(topicDTO);
         Topic savedTopic = topicRepository.save(topic);
         return topicMapper.toDTO(savedTopic);
@@ -40,8 +47,13 @@ public class TopicService implements ITopicService {
     
     @Override
     public TopicDTO updateTopic(Long id, TopicDTO topicDTO) {
+        if (topicDTO.getName() == null || topicDTO.getName().isEmpty()) {
+            throw new RuntimeException("Topic name cannot be empty");
+        }
+
         Topic existingTopic = topicRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Topic not found"));
+                .orElseThrow(() -> new RuntimeException("Topic with ID " + id + " not found"));
+
         existingTopic.setName(topicDTO.getName());
         existingTopic.setDescription(topicDTO.getDescription());
         Topic updatedTopic = topicRepository.save(existingTopic);
@@ -50,7 +62,8 @@ public class TopicService implements ITopicService {
     
     @Override
     public void deleteTopic(Long id) {
-        Topic topic = topicRepository.findById(id).orElseThrow(() -> new RuntimeException("Topic not found"));
+        Topic topic = topicRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Topic with ID " + id + " not found"));
         topicRepository.delete(topic);
     }
 }

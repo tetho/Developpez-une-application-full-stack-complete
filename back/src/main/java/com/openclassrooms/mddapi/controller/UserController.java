@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,34 +26,57 @@ public class UserController {
 	private IUserService userService;
 	
 	@Autowired
-	public UserController(IUserService userService) {
-		this.userService = userService;
-	}
-	
-	@GetMapping("/{id}")
-	public UserDTO getUserById(@PathVariable Long id) {
-		return this.userService.getUserById(id);
-	}
-	
-	@PutMapping("")
+    public UserController(IUserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        try {
+            UserDTO user = userService.getUserById(id);
+            return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PutMapping("")
     public ResponseEntity<UserDTO> update(Authentication authentication, @RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.updateUser(authentication, userDTO));
+        try {
+            UserDTO updatedUser = userService.updateUser(authentication, userDTO);
+            return ResponseEntity.ok(updatedUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 	
     @GetMapping("/topics")
-    public List<TopicDTO> getSubscribedTopics(Authentication authentication) {
-        return this.userService.getSubscribedTopics(authentication);
+    public ResponseEntity<List<TopicDTO>> getSubscribedTopics(Authentication authentication) {
+        try {
+            List<TopicDTO> topics = userService.getSubscribedTopics(authentication);
+            return ResponseEntity.ok(topics);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping("/{id}/topics/{topicId}/subscribe")
     public ResponseEntity<Void> subscribeToTopic(@PathVariable Long topicId, Authentication authentication) {
-        this.userService.subscribeToTopic(topicId, authentication);
-        return ResponseEntity.ok().build();
+        try {
+            userService.subscribeToTopic(topicId, authentication);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("/{id}/topics/{topicId}/unsubscribe")
     public ResponseEntity<Void> unsubscribeFromTopic(@PathVariable Long topicId, Authentication authentication) {
-        this.userService.unsubscribeFromTopic(topicId, authentication);
-        return ResponseEntity.ok().build();
+        try {
+            userService.unsubscribeFromTopic(topicId, authentication);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
