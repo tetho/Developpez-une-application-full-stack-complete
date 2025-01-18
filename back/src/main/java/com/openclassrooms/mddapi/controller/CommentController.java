@@ -22,16 +22,21 @@ import com.openclassrooms.mddapi.service.ICommentService;
 @RequestMapping("/comments")
 public class CommentController {
 
-	private ICommentService commentService;
+    private ICommentService commentService;
 
-	@Autowired
-	public CommentController(ICommentService commentService) {
-		this.commentService = commentService;
-	}
-	
-	@GetMapping("/{id}")
+    @Autowired
+    public CommentController(ICommentService commentService) {
+        this.commentService = commentService;
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<CommentDTO> getCommentById(@PathVariable Long id) {
-        return ResponseEntity.ok(commentService.getCommentById(id));
+        try {
+            CommentDTO comment = commentService.getCommentById(id);
+            return comment != null ? ResponseEntity.ok(comment) : ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/post/{postId}")
@@ -41,18 +46,31 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO, Authentication authentication) {
-        CommentDTO createdComment = commentService.createComment(commentDTO, authentication);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
+        try {
+            CommentDTO createdComment = commentService.createComment(commentDTO, authentication);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CommentDTO> updateComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO) {
-        return ResponseEntity.ok(commentService.updateComment(id, commentDTO));
+        try {
+            CommentDTO updatedComment = commentService.updateComment(id, commentDTO);
+            return ResponseEntity.ok(updatedComment);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
-        commentService.deleteComment(id);
-        return ResponseEntity.noContent().build();
+        try {
+            commentService.deleteComment(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

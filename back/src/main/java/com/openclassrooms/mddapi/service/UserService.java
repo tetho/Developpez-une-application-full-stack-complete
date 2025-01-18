@@ -20,48 +20,59 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 @Service
 public class UserService implements IUserService {
 
-	@Autowired
+    @Autowired
     private UserRepository userRepository;
 
-	@Autowired
+    @Autowired
     private TopicRepository topicRepository;
-	
-    private final UserMapper userMapper = UserMapper.INSTANCE;
     
+    private final UserMapper userMapper = UserMapper.INSTANCE;
     private final TopicMapper topicMapper = TopicMapper.INSTANCE;
 
     @Override
     public Optional<UserDTO> findByEmail(String email) {
-		Optional<User> user = userRepository.findByEmail(email);
-	    return user.map(userMapper::toDTO);
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isEmpty()) {
+            throw new RuntimeException("User with email " + email + " not found");
+        }
+        return user.map(userMapper::toDTO);
     }
     
     @Override
     public Optional<UserDTO> findByUsername(String username) {
-		Optional<User> user = userRepository.findByUsername(username);
-	    return user.map(userMapper::toDTO);
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new RuntimeException("User with username " + username + " not found");
+        }
+        return user.map(userMapper::toDTO);
     }
     
     @Override
-	public Optional<UserDTO> findByEmailOrUsername(String emailOrUsername) {
-    	Optional<User> userByEmail = userRepository.findByEmail(emailOrUsername);
+    public Optional<UserDTO> findByEmailOrUsername(String emailOrUsername) {
+        Optional<User> userByEmail = userRepository.findByEmail(emailOrUsername);
         if (userByEmail.isPresent()) {
             return userByEmail.map(userMapper::toDTO);
         } else {
-        	Optional<User> userByUsername = userRepository.findByUsername(emailOrUsername);
-            return userByUsername.map(userMapper::toDTO);	
+            Optional<User> userByUsername = userRepository.findByUsername(emailOrUsername);
+            if (userByUsername.isEmpty()) {
+                throw new RuntimeException("User with email or username " + emailOrUsername + " not found");
+            }
+            return userByUsername.map(userMapper::toDTO);
         }
-	}
-    
+    }
+
     @Override
     public UserDTO getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with ID " + id + " not found"));
         return userMapper.toDTO(user);
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new RuntimeException("No users found");
+        }
         return users.stream().map(userMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -69,29 +80,30 @@ public class UserService implements IUserService {
     public UserDTO createUser(UserDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
         if (!isPasswordValid(userDTO.getPassword())) {
-            throw new RuntimeException("Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.");
+            throw new RuntimeException("The password must contain at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.");
         }
         User savedUser = userRepository.save(user);
         return userMapper.toDTO(savedUser);
     }
-    
+
     @Override
     public UserDTO updateUser(Authentication authentication, UserDTO userDTO) {
-    	String emailOrUsername = authentication.getName();
+        String emailOrUsername = authentication.getName();
         User user = userRepository.findByEmail(emailOrUsername)
                 .or(() -> userRepository.findByUsername(emailOrUsername))
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User with authentication " + emailOrUsername + " not found"));
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         User updatedUser = userRepository.save(user);
         return userMapper.toDTO(updatedUser);
     }
-    
+
     @Override
     public UserDTO updateUser(String emailOrUsername, UserDTO userDTO) {
-    	User user = userRepository.findByEmail(emailOrUsername)
+        User user = userRepository.findByEmail(emailOrUsername)
                 .or(() -> userRepository.findByUsername(emailOrUsername))
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User with email or username " + emailOrUsername + " not found"));
+        
         if (userDTO.getEmail() != null && !userDTO.getEmail().equals(user.getEmail())) {
             user.setEmail(userDTO.getEmail());
         }
@@ -101,10 +113,10 @@ public class UserService implements IUserService {
         User updatedUser = userRepository.save(user);
         return userMapper.toDTO(updatedUser);
     }
-    
+
     @Override
     public void deleteUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with ID " + id + " not found"));
         userRepository.delete(user);
     }
     
@@ -115,10 +127,11 @@ public class UserService implements IUserService {
     
     @Override
     public List<TopicDTO> getSubscribedTopics(Authentication authentication) {
-    	String emailOrUsername = authentication.getName();
+        String emailOrUsername = authentication.getName();
         User user = userRepository.findByEmail(emailOrUsername)
                 .or(() -> userRepository.findByUsername(emailOrUsername))
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User with authentication " + emailOrUsername + " not found"));
+        
         return user.getTopics()
                    .stream()
                    .map(topicMapper::toDTO)
@@ -127,12 +140,14 @@ public class UserService implements IUserService {
 
     @Override
     public void subscribeToTopic(Long topicId, Authentication authentication) {
-    	String emailOrUsername = authentication.getName();
+        String emailOrUsername = authentication.getName();
         User user = userRepository.findByEmail(emailOrUsername)
                 .or(() -> userRepository.findByUsername(emailOrUsername))
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User with authentication " + emailOrUsername + " not found"));
+        
         Topic topic = topicRepository.findById(topicId)
-            .orElseThrow(() -> new RuntimeException("Topic not found"));
+            .orElseThrow(() -> new RuntimeException("Topic with ID " + topicId + " not found"));
+        
         if (!user.getTopics().contains(topic)) {
             user.getTopics().add(topic);
             userRepository.save(user);
@@ -141,15 +156,19 @@ public class UserService implements IUserService {
 
     @Override
     public void unsubscribeFromTopic(Long topicId, Authentication authentication) {
-    	String emailOrUsername = authentication.getName();
+        String emailOrUsername = authentication.getName();
         User user = userRepository.findByEmail(emailOrUsername)
                 .or(() -> userRepository.findByUsername(emailOrUsername))
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User with authentication " + emailOrUsername + " not found"));
+        
         Topic topic = topicRepository.findById(topicId)
-            .orElseThrow(() -> new RuntimeException("Topic not found"));
+            .orElseThrow(() -> new RuntimeException("Topic with ID " + topicId + " not found"));
+        
         if (user.getTopics().contains(topic)) {
             user.getTopics().remove(topic);
             userRepository.save(user);
+        } else {
+            throw new RuntimeException("User is not subscribed to the topic with ID " + topicId);
         }
     }
 }

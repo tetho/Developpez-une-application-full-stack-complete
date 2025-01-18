@@ -20,38 +20,56 @@ import com.openclassrooms.mddapi.service.ITopicService;
 @RestController
 @RequestMapping("/topics")
 public class TopicController {
-	
-	private ITopicService topicService;
-	
-	@Autowired
-	public TopicController(ITopicService topicService) {
-		this.topicService = topicService;
-	}
 
-	@GetMapping
+    private ITopicService topicService;
+
+    @Autowired
+    public TopicController(ITopicService topicService) {
+        this.topicService = topicService;
+    }
+
+    @GetMapping
     public List<TopicDTO> getTopics() {
         return topicService.getTopics();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TopicDTO> getTopicById(@PathVariable Long id) {
-        return ResponseEntity.ok(topicService.getTopicById(id));
+        try {
+            TopicDTO topic = topicService.getTopicById(id);
+            return topic != null ? ResponseEntity.ok(topic) : ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping
     public ResponseEntity<TopicDTO> createTopic(@RequestBody TopicDTO topicDTO) {
-        TopicDTO createdTopic = topicService.createTopic(topicDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTopic);
+        try {
+            TopicDTO createdTopic = topicService.createTopic(topicDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdTopic);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TopicDTO> updateTopic(@PathVariable Long id, @RequestBody TopicDTO topicDTO) {
-        return ResponseEntity.ok(topicService.updateTopic(id, topicDTO));
+        try {
+            TopicDTO updatedTopic = topicService.updateTopic(id, topicDTO);
+            return ResponseEntity.ok(updatedTopic);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTopic(@PathVariable Long id) {
-        topicService.deleteTopic(id);
-        return ResponseEntity.noContent().build();
+        try {
+            topicService.deleteTopic(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
