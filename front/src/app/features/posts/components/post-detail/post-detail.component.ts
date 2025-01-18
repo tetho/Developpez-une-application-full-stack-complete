@@ -19,7 +19,6 @@ import { UserService } from 'src/app/services/user.service';
 
 })
 export class PostDetailComponent implements OnInit {
-
   public post!: Post;
   public topic!: Topic | undefined;
   public author!: User | undefined;
@@ -27,17 +26,20 @@ export class PostDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private fb: FormBuilder,
     private postService: PostService,
     private topicService: TopicService,
     private userService: UserService,
     private commentService: CommentService,
-    private sessionService: SessionService,
     private matSnackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
+    this.loadPost(id);
+    this.loadComments(id);
+  }
+
+  private loadPost(id: string): void {
     this.postService.getById(id).subscribe({
       next: (post) => {
         this.post = post;
@@ -52,5 +54,17 @@ export class PostDetailComponent implements OnInit {
       },
       error: (err) => console.error('Erreur lors du chargement du post :', err),
     });
+  }
+
+  private loadComments(postId: string): void {
+    this.commentService.getByPostId(Number(postId)).subscribe({
+      next: (comments) => (this.comments = comments),
+      error: (err) => console.error('Erreur lors du chargement des commentaires :', err),
+    });
+  }
+
+  public onCommentAdded(): void {
+    const postId = this.route.snapshot.paramMap.get('id')!;
+    this.loadComments(postId);
   }
 }

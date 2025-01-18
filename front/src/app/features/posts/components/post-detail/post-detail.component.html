@@ -20,6 +20,6 @@
         </mat-card-content>
     </mat-card>
     <hr />
-    <app-comment-list></app-comment-list>
-    <app-comment-form></app-comment-form>
+    <app-comment-list [comments]="comments"></app-comment-list>
+    <app-comment-form (commentAdded)="onCommentAdded()"></app-comment-form>
 </div>
